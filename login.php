@@ -37,11 +37,11 @@ function valid_login($username, $password, $db)
 This check can be performed in a separate function if necessary*/
 if(!valid_login($username, $password, $db))
 {
-  exit("Invalid Login.")
+  exit("Invalid Login.");
 }
 else
 {
-  header("refresh:5 ; url=[INSERT URL HERE]")
+  header("refresh:5 ; url=[INSERT URL HERE]");
   exit();
 }
 ?>
