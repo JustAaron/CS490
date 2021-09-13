@@ -4,8 +4,12 @@
 session_start();
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
-//Login credentials excluded on Github, making this impossible to test for the time being. Heroku should be set-up with the appropriate keys ASAP
-include ("account.php");
+
+$login_hostname = getenv('HOSTNAME');
+$login_username = getenv('USERNAME');
+$login_password = getenv('PASSWORD');
+$login_project = getenv('PROJECT');
+
 $db = mysqli_connect($hostname, $username, $password, $project);
 if (mysqli_connect_errno())
 {
