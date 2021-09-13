@@ -10,7 +10,7 @@ $login_username = getenv('USERNAME');
 $login_password = getenv('PASSWORD');
 $login_project = getenv('PROJECT');
 
-$db = mysqli_connect($hostname, $username, $password, $project);
+$db = mysqli_connect($login_hostname, $login_username, $login_password, $login_project);
 if (mysqli_connect_errno())
 {
 	echo "Failed to connect to MySQL: " . mysqli_connect_error();
