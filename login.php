@@ -30,14 +30,8 @@ function valid_login($username, $password, $db)
   $statement = "select * from alpha_users where username='$username' and password='$password'";
   ($t=mysqli_query($db, $statement)) or die(mysqli_error($db));
   $valid = mysqli_num_rows($t);
-  if($valid==0)
-  {
-    return false;
-  }
-  else
-  {
-    return true;
-  }
+  if($valid==0) { return false; }
+  else { return true; }
 }
 /*url must point to whatever page the user is directed to after login. A check must also be added to see if the user is an Admin or not.
 This check can be performed in a separate function if necessary*/
