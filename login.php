@@ -21,9 +21,9 @@ $username = $_GET["user"];
 $password = $_GET["password"];
 /*Checks to see if any entries in the database correspond to the input username and password. If not, it simply returns false, signifying an invalid login.
 This function can eventually be put in a separate file to remove clutter, and/or improved with a hashing algorithm and input sanitization.*/
-function valid_login($username, $password, $db)
+function valid_login($username, $db)
 {
-  $statement = "select * from alpha_users where username='$username' and password='$password'";
+  $statement = "select * from alpha_users where username='$username'";
   ($t=mysqli_query($db, $statement)) or die(mysqli_error($db));
   $valid = mysqli_num_rows($t);
   if($valid==0) { return false; }
@@ -31,12 +31,19 @@ function valid_login($username, $password, $db)
 }
 /*url must point to whatever page the user is directed to after login. A check must also be added to see if the user is an Admin or not.
 This check can be performed in a separate function if necessary*/
-if(!valid_login($username, $password, $db))
+function verify_password($username, $password, $db)
 {
-  exit("Invalid Login.");
+	$statement = "select password from alpha_users where username='$username'";
+	$query = mysqli_query($db, $statement);
+	$stored_hash = mysqli_fetch_assoc($query);
+	$stored_password = $stored_hash['password'];
+
+	if(password_verify($password, $stored_password)) { return true; }
+	else { return false; }
 }
-else
-{
-  exit("You successfully logged in!");
-}
+if(!valid_login($username, $db)) { exit("Invalid Login."); }
+
+else if(!verify_password($username, $password, $db)) { exit("Invalid Password."); }
+
+else { exit("You successfully logged in!"); }
 ?>
