@@ -45,5 +45,13 @@ if(!valid_login($username, $db)) { exit("Invalid Login."); }
 
 else if(!verify_password($username, $password, $db)) { exit("Invalid Password."); }
 
-else { exit("You successfully logged in!"); }
+else
+{
+	$statement = "select status from alpha_users where username='$username'";
+	$query = mysqli_query($db, $statement);
+	$status = mysqli_fetch_assoc($query);
+	$admin = $status['status'];
+	if($admin == 1) { exit("Welcome Administrator. You have successfully logged in!"); }
+	else { exit("Welcome, painfully ordinary user. You have successfully logged in."); }
+}
 ?>
