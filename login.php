@@ -4,13 +4,9 @@
 session_start();
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
+include("account.php");
 
-$login_hostname = getenv('HOSTNAME');
-$login_username = getenv('USERNAME');
-$login_password = getenv('PASSWORD');
-$login_project = getenv('PROJECT');
-
-$db = mysqli_connect($login_hostname, $login_username, $login_password, $login_project);
+$db = mysqli_connect($hostname, $username, $password, $project);
 if (mysqli_connect_errno())
 {
 	echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -21,8 +17,8 @@ mysqli_select_db($db, $project);
 /***************************************************************************************************************************************************/
 
 //Just reads text from the input fields. Can/Should be changed depending on what field is created.
-$username = $_GET["username"]
-$password = $_GET["password"]
+$username = $_GET["user"];
+$password = $_GET["password"];
 /*Checks to see if any entries in the database correspond to the input username and password. If not, it simply returns false, signifying an invalid login.
 This function can eventually be put in a separate file to remove clutter, and/or improved with a hashing algorithm and input sanitization.*/
 function valid_login($username, $password, $db)
@@ -41,7 +37,6 @@ if(!valid_login($username, $password, $db))
 }
 else
 {
-  header("refresh:5 ; url=[INSERT URL HERE]");
-  exit();
+  exit("You successfully logged in!");
 }
 ?>
