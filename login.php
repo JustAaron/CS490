@@ -6,7 +6,7 @@
 </head>
 
 <body>
-	<h1>Temporary header</h1>
+	<h1>Login Page</h1>
 
 	<?php
 	//Starts the session and connects to the database. Code can essentially be ignored for right now.
