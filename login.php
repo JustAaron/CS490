@@ -19,8 +19,7 @@ mysqli_select_db($db, $project);
 //Just reads text from the input fields. Can/Should be changed depending on what field is created.
 $username = $_GET["user"];
 $password = $_GET["password"];
-/*Checks to see if any entries in the database correspond to the input username and password. If not, it simply returns false, signifying an invalid login.
-This function can eventually be put in a separate file to remove clutter, and/or improved with a hashing algorithm and input sanitization.*/
+
 function valid_login($username, $db)
 {
   $statement = "select * from alpha_users where username='$username'";
@@ -29,8 +28,7 @@ function valid_login($username, $db)
   if($valid==0) { return false; }
   else { return true; }
 }
-/*url must point to whatever page the user is directed to after login. A check must also be added to see if the user is an Admin or not.
-This check can be performed in a separate function if necessary*/
+
 function verify_password($username, $password, $db)
 {
 	$statement = "select password from alpha_users where username='$username'";
