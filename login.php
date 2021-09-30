@@ -6,7 +6,7 @@
 </head>
 
 <body>
-	<h1>Temporary header</h1>
+	<h1>Login Page</h1>
 
 	<?php
 	//Starts the session and connects to the database. Code can essentially be ignored for right now.
@@ -26,11 +26,10 @@
 	mysqli_select_db($db, $project);
 	/***************************************************************************************************************************************************/
 
-	//Just reads text from the input fields. Can/Should be changed depending on what field is created.
+	//Just reads text from the input fields.
 	$username = $_POST["username"];
 	$password = $_POST["password"];
-	/*Checks to see if any entries in the database correspond to the input username and password. If not, it simply returns false, signifying an invalid login.
-	This function can eventually be put in a separate file to remove clutter, and/or improved with a hashing algorithm and input sanitization.*/
+	/*Checks to see if any entries in the database correspond to the input username and password. If not, it simply returns false, signifying an invalid login.*/
 	function valid_login($username, $db)
 	{
 	  $statement = "select * from alpha_users where username='$username'";
@@ -39,8 +38,7 @@
 	  if($valid==0) { return false; }
 	  else { return true; }
 	}
-	/*url must point to whatever page the user is directed to after login. A check must also be added to see if the user is an Admin or not.
-	This check can be performed in a separate function if necessary*/
+	/* Veriifies the user password by comparing the hash in the database to the input password from the user. Uses built-in PHP hash functions.*/
 	function verify_password($username, $password, $db)
 	{
 		$statement = "select password from alpha_users where username='$username'";
@@ -51,6 +49,7 @@
 		if(password_verify($password, $stored_password)) { return true; }
 		else { return false; }
 	}
+	/* A series of checks to make sure that the users Username and Password are valid. */
 	if(!valid_login($username, $db)) {
 		echo("<p>Invalid Login.</p>");
 		return_to_login("Return to login");
@@ -61,6 +60,7 @@
 		return_to_login("Return to login");
 	}
 
+  /* Checks to see if the user is marked as an administrator or a normal user in the database. It then gives a different output depending. */
 	else
 	{
 		$statement = "select status from alpha_users where username='$username'";
@@ -71,7 +71,7 @@
 			echo("<p>Welcome Administrator. You have successfully logged in!</p>");
 		}
 		else if($admin == 0) {
-			echo("<p>Welcome, painfully ordinary user. You have successfully logged in.</p>");
+			echo("<p>Welcome, user. You have successfully logged in.</p>");
 		}
 		else {
 			echo("<p>Unexpected user account type</p><br><p>exiting...</p>");
@@ -79,7 +79,7 @@
 		}
 		return_to_login("Logout");
 	}
-	
+
 	// echoes the return to login button. $val should be the button's text.
 	function return_to_login($val)
 	{
@@ -88,7 +88,7 @@
 			<input type=\"submit\" value=\"$val\" />
 		</form>");
 	}
-	
+
 	/*<form action="login.html" method="post">
 		<input type="submit" value="Logout" />
 	</form>*/
