@@ -1,3 +1,7 @@
+<?php
+	session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +15,7 @@
 	<?php
 	//Starts the session and connects to the database. Code can essentially be ignored for right now.
 	/*****************************************************************************************************************************************************/
-	session_start();
+	//session_start();
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	ini_set('display_errors', 1);
 	require("account.php");
@@ -27,8 +31,11 @@
 	/***************************************************************************************************************************************************/
 
 	//Just reads text from the input fields.
-	$username = $_POST["username"];
-	$password = $_POST["password"];
+	if(!isset($_POST["username"]) || !isset($_POST["password"])){
+		exit("post variables not set");
+	}
+	$client_username = $_POST["username"];
+	$client_password = $_POST["password"];
 	/*Checks to see if any entries in the database correspond to the input username and password. If not, it simply returns false, signifying an invalid login.*/
 	function valid_login($username, $db)
 	{
@@ -50,12 +57,12 @@
 		else { return false; }
 	}
 	/* A series of checks to make sure that the users Username and Password are valid. */
-	if(!valid_login($username, $db)) {
+	if(!valid_login($client_username, $db)) {
 		echo("<p>Invalid Login.</p>");
 		return_to_login("Return to login");
 	}
 
-	else if(!verify_password($username, $password, $db)) {
+	else if(!verify_password($client_username, $client_password, $db)) {
 		echo("<p>Invalid Login.</p>");
 		return_to_login("Return to login");
 	}
@@ -63,7 +70,7 @@
   /* Checks to see if the user is marked as an administrator or a normal user in the database. It then gives a different output depending. */
 	else
 	{
-		$statement = "select status from alpha_users where username='$username'";
+		$statement = "select status from alpha_users where username='$client_username'";
 		$query = mysqli_query($db, $statement);
 		$status = mysqli_fetch_assoc($query);
 		$admin = $status['status'];
@@ -72,6 +79,9 @@
 		}
 		else if($admin == 0) {
 			echo("<p>Welcome, user. You have successfully logged in.</p>");
+			$_SESSIONS['username'] = $_POST['username'];
+			$_SESSIONS['password'] = $_POST['password'];
+			echo("<p><a href=\"userpage.php\">User Page</a></p>");
 		}
 		else {
 			echo("<p>Unexpected user account type</p><br><p>exiting...</p>");
@@ -83,15 +93,13 @@
 	// echoes the return to login button. $val should be the button's text.
 	function return_to_login($val)
 	{
+		session_unset();
+		session_destroy();
 		echo("
 		<form action=\"login.html\" method=\"post\">
 			<input type=\"submit\" value=\"$val\" />
 		</form>");
 	}
-
-	/*<form action="login.html" method="post">
-		<input type="submit" value="Logout" />
-	</form>*/
 	?>
 
 </body>
