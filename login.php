@@ -79,8 +79,11 @@
 		}
 		else if($admin == 0) {
 			echo("<p>Welcome, user. You have successfully logged in.</p>");
-			$_SESSIONS['username'] = $_POST['username'];
-			$_SESSIONS['password'] = $_POST['password'];
+			$_SESSION["username"] = $client_username;
+			$_SESSION["password"] = $client_password;
+			echo("session variables set");
+			//echo($client_username . $client_password);
+			echo($_SESSION["username"] . $_SESSION["password"]);
 			echo("<p><a href=\"userpage.php\">User Page</a></p>");
 		}
 		else {
@@ -93,8 +96,8 @@
 	// echoes the return to login button. $val should be the button's text.
 	function return_to_login($val)
 	{
-		session_unset();
-		session_destroy();
+		//session_unset();
+		//session_destroy();
 		echo("
 		<form action=\"login.html\" method=\"post\">
 			<input type=\"submit\" value=\"$val\" />
