@@ -25,7 +25,8 @@ form {
 	border: 5px solid grey;
 	padding: 40px;
 	margin: 0 auto;
-	background-color:#C8C9C8
+	background-color:#E6E0E0
+
 }
 
 label {
@@ -45,4 +46,80 @@ input {
 
 input[type=submit] {
 	width:100px;
+}
+
+#banner {
+	background-color:white;
+	margin:auto;
+}
+#MessageButton {
+	text-align: center;
+	width: 100px;
+	height: 50px;
+	color: blue;
+	float: left;
+}
+#SearchButton {
+	text-align: center;
+	width: 100px;
+	height: 50px;
+	color: blue;
+	float: right;
+}
+
+#chatHeader {
+    background:darkgray;
+}
+
+.chatWindow {
+    height:500px;
+    padding:5px;
+    overflow:auto;
+	width: 700px;
+	display:block;
+	margin-left: auto;
+	margin-right:auto;
+}
+.sendMessage{
+    display:flex;
+    justify-content: center
+}
+.message {
+    height:30px;
+    width:600px;
+    margin-right:10px;
+}
+.sendButton {
+    width: 80px;
+    background-color:dodgerblue;
+}
+.incomingMessage{
+	margin-top:10px;
+}
+.outgoingMessage {
+	margin-top:10px;
+}
+.myMessage{
+	float:right;
+	background:deepskyblue;
+	padding:5px;
+}
+.othersMessage{
+	float:left;
+	background:gainsboro;
+	padding:5px;
+}
+.spacing {
+	width: 100%;
+	height: 8px;
+	float:left;
+}
+.searchUsers {
+    display:flex;
+    justify-content: center
+}
+.usernameSearch {
+    height:30px;
+    width:600px;
+    margin-right:10px;
 }
