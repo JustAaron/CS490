@@ -1,4 +1,11 @@
 <?php
+	/*
+	Functionality: Verifies that the session data contains a valid username and valid password. If the data is valid, nothing will happen. If the data is invalid, redirect to "disconnect_page.php".
+	Input: 
+	In $_SESSION[], "username" should be the username of the logged-in user, "password" should be the plaintext password of the logged-in user.
+	Output: 
+	This file does not echo anything. It only redirects to the disconnects page if the session data is invalid. 
+	*/
 	session_start();
 	require('account.php');
 ?>

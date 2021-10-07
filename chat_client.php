@@ -1,4 +1,16 @@
 <?php
+	/*
+	Functionality: Inserts messages into ChatMessages table using given information. Should be called whenever a user sends a message to another user. 
+	The client is the user who is currently logged in. The other is the user who the client wants to chat with.
+	Input: 
+	In $_POST[]: "other" should be the username of the other; "message" should be the message to be sent from client to other. Note: "message" should be <= 192 characters
+	In $_SESSIONS[], "username" should be the username of the client. Note: this file does not check if the login is valid
+	Output:
+	If message is successfully sent: echo "values inserted"
+	If message was not sent because of a non-existent other: echo "user not found"
+	If message was not sent because of database error: echo "error while inserting values"
+	*/
+	
 	session_start();
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	ini_set('display_errors', 1);
@@ -6,51 +18,38 @@
 	$conn = mysqli_connect($hostname, $username, $password, $project);
 	if(mysqli_connect_errno()){
 		//echo "<p>Failed to connect to MySQL: " . mysqli_connect_error(). "</p>";
-		exit('Error while connecting to database');
-	}
-	
-	function verify_login(){
-		global $conn;
-		$query = 'SELECT * FROM alpha_users WHERE username=\'' . $_POST['username'] . '\';';
-		$result = mysqli_query($conn, $query);
-		if($result && mysqli_num_rows($result) > 0){
-			mysqli_free_result($result);
-			return true;
-			
-		}
-		else{
-			mysqli_free_result($result);
-			return false;
-		}
-	}
-	
-	function verify_password(){
-		global $conn;
-		$query = 'SELECT * FROM alpha_users WHERE username=\'' . $_POST['username'] . '\'';
-		$result = mysqli_query($conn, $query);
-		if(!$result || mysqli_num_rows($result) != 1){
-			mysqli_free_result($result);
-			return false;
-		}
-		$row = mysqli_fetch_assoc($result);
-		mysqli_free_result($result);
-		$hashed_password = $row['password'];
-		if(password_verify($_POST['password'], $hashed_password)){
-			return true;
-		}
-		return false;
+		exit();
 	}
 	
 	function main(){
-		if(!verify_login() || !verify_password()){
-			echo('Wrong credentials');
+		global $conn;
+		$client_username = $_SESSIONS['username'];
+		$other_username = $_POST['other'];
+		$message = $_POST['message'];
+		$query = 'SELECT * FROM alpha_users WHERE username="' . $client_username . '";';
+		$result = mysqli_query($conn, $query);
+		if($result){
+			$client_id = mysqli_fetch_assoc($result)['uid'];
+		}
+		$query = 'SELECT * FROM alpha_users WHERE username="' . $other_username . '";';
+		$result = mysqli_query($conn, $query);
+		if($result){
+			$other_id = mysqli_fetch_assoc($result)['uid'];
+		}
+		else{
+			echo('user not found');
 			exit();
 		}
-		echo('connected!');
+		$query = 'INSERT INTO ChatMessages VALUES (MAX(MessageId) + 1, ' . $client_id . ', ' , $other_id . ', "' . $message . '");';
+		$result = mysqli_query($conn, $query);
+		if($result){
+			echo('values inserted');
+		}
+		else{
+			echo('error while inserting values');
+		}
 	}
-	
 	main();
-	
 		
 	mysqli_close($conn);
 ?>
