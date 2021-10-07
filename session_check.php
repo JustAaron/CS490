@@ -7,7 +7,7 @@
 	//echo("enter session_check");
 	$conn = mysqli_connect($hostname, $username, $password, $project);
 	if(mysqli_connect_errno()){
-		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		//echo "Failed to connect to MySQL: " . mysqli_connect_error();
 		exit();
 	}
 	/*
@@ -20,13 +20,12 @@
 	*/
 	function disconnectUser(){
 		global $is_valid_session;
-		/*echo("enter returntologin");
-		// TODO: disconnected user url goes here
+		//echo("enter disconnectuser");
 		session_unset();
-		//session_destroy();
-		echo("<a href=\"login.html\">Return to login</a>");
-		exit();*/
+		session_destroy();
 		$is_valid_session = false;
+		header("disconnect_page.php");
+		exit();
 	}
 	
 	if(!isset($_SESSION['username']) || !isset($_SESSION['password'])){
@@ -46,7 +45,7 @@
 		}
 		else{
 			mysqli_free_result($result);
-			echo("invalid user");
+			//echo("invalid user");
 			return false;
 		}
 	}
@@ -65,7 +64,7 @@
 		if(password_verify($password, $hashed_password)){
 			return true;
 		}
-		echo("invalid pass");
+		//echo("invalid pass");
 		return false;
 	}
 	
@@ -77,6 +76,6 @@
 		disconnectUser();
 	}
 	
-	echo("everything OK");
+	//echo("everything OK");
 	//exit(); // if this line is reached, everything is OK
 ?>
