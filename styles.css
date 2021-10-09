@@ -68,11 +68,13 @@ input[type=submit] {
 }
 
 #chatHeader {
-    background:darkgray;
+    /*background:darkblue;*/
+	text-decoration: underline;
+	text-decoration-color:darkblue;
 }
 
 .chatWindow {
-    height:500px;
+    height:400px;
     padding:5px;
     overflow:auto;
 	width: 700px;
@@ -120,6 +122,28 @@ input[type=submit] {
 }
 .usernameSearch {
     height:30px;
-    width:600px;
+    width:300px;
     margin-right:10px;
+}
+a.returnButton {
+	text-align: center;
+	color: white;
+	display:block;
+	margin: 0 auto;
+}
+#searchOptions {
+	text-align:center;
+	padding:10px;
+	width: 800px;
+	border-radius: 50px;
+	border: 5px solid grey;
+	padding: 40px;
+	margin: 0 auto;
+	background-color:#E6E0E0
+}
+#postRadio{
+
+}
+#userRadio{
+
 }
