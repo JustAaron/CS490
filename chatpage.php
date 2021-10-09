@@ -16,8 +16,14 @@
 </head>
 <body>
     <script src="chat.js"></script>
+    <h4>Search User</h4>
+    <div class="searchUsers" id="searchUsers">
+        <textarea class="usernameSearch" id="usernameSearch"></textarea>
+        <button class="searchButton" onclick="updateListen()">Search</button>
+    </div>
     <h1 id="chatHeader">Chat</h1>
     <div class="chatWindow" id="chatWindow">
+        <!--
         <div class="incomingMessage">
             <div class="othersMessage">Hi, how are you?</div>
             <div class="spacing"></div>
@@ -29,11 +35,11 @@
         <div class="outgoingMessage">
             <div class="myMessage">How about you?</div>
             <div class="spacing"></div>
-        </div>
+        </div>-->
     </div>
     <div class="sendMessage" id="sendMessage">
         <textarea class="message" id="message"></textarea>
-        <button class="sendButton" onclick="send()">Send</button>
+        <button class="sendButton" onclick="updateClient()">Send</button>
     </div>
     
 </body>
