@@ -3,7 +3,7 @@
 	Functionality: echoes a json-encoded string using given information. Should be used whenever a client wants to view their messages with another user.
 	The client is the user who is currently logged in. The other is the user who the client wants to chat with.
 	Input:
-	In $_POST[], "other" should be the username of other.
+	In $_POST[], "other" should be the username of other, "index" should be the index of the message to be echoed.
 	In $_SESSION[], "username" should be the username of the client. Note: the file does not check if the user is valid
 	Output:
 	If the other is valid and there are >0 messages between client and other: echo json-encoded strings where the keys are the names of the database fields ("MessageID", "SenderID", "ReceiverID", "Message") and the values are the values stored in each row of the table.
@@ -22,6 +22,7 @@
 	
 	function main(){
 		global $conn;
+		$stop_condition = $_POST['index'];
 		$send_query = 'SELECT * FROM alpha_users WHERE username=\'' . $_SESSION['username'] . '\';';
 		$rec_query = 'SELECT * FROM alpha_users WHERE username=\'' . $_POST['other'] . '\';';
 		$send_result = mysqli_query($conn, $send_query);
@@ -34,10 +35,16 @@
 			$message_query = 'SELECT * FROM ChatMessages WHERE (SenderID="' . $send_uid . '" AND ReceiverID="' . $rec_uid . '") OR (SenderID="' . $rec_uid . '" AND ReceiverID="' . $send_uid . '");';
 			$message_result = mysqli_query($conn, $message_query);
 			if($message_result && mysqli_num_rows($message_result) > 0){
-				while($message_row = mysqli_fetch_row($result)){
-				$message = array('MessageID'=>$message_row[0], 'SenderID'=>$message_row[1], 'ReceiverID'=$message_row[2], 'Message'=>$message_row[3]);
-				$message = json_encode($message);
-				echo($message);
+				if($stop_condition > mysqli_num_rows($message_result)){
+					echo('out of bounds');
+				}
+				else{
+					$arrayofrows = mysqli_fetch_all($message_result);
+					$message_row = $arrayofrows[$stop_condition-1]);
+					$message = array('MessageID'=>$message_row[0], 'SenderID'=>$message_row[1], 'ReceiverID'=$message_row[2], 'Message'=>$message_row[3]);
+					$message = json_encode($message);
+					echo($message);
+				}
 			}
 			else{
 				echo('no messsages found');
