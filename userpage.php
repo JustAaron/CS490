@@ -39,7 +39,7 @@ $add_post = "insert into posts(post_subject, post_body, uid) values ('$post_subj
 </head>
 <body>
     <div id="banner">
-            <a href="messages.php"><button id="MessageButton">Messages</button></a>
+            <a href="chatpage.php"><button id="MessageButton">Messages</button></a>
             <a href="searchpage.html"><button id="SearchButton" type="button">Search</button></a>
     </div>
     <div id="pageHeader">
