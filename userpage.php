@@ -1,6 +1,12 @@
 <?php
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
 session_start();
+if(!isset($_SESSION["logged"]))
+{
+  header("refresh:0, url=login.html");
+  exit();
+}
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 require("account.php");

@@ -84,15 +84,17 @@
 			echo("<p>Welcome Administrator. You have successfully logged in!</p>");
 			$_SESSION["username"] = $client_username;
 			$_SESSION["password"] = $client_password;
+			$_SESSION["logged"] = true;
 			echo("<p><a href=\"adminpage.php\">Admin Page</a></p>");
 		}
 		else if($admin == 0) {
 			echo("<p>Welcome, user. You have successfully logged in.</p>");
 			$_SESSION["username"] = $client_username;
 			$_SESSION["password"] = $client_password;
+			$_SESSION["logged"] = true;
 			echo("session variables set");
 			//echo($client_username . $client_password);
-			echo($_SESSION["username"] . $_SESSION["password"]);
+			echo($_SESSION["username"] . $_SESSION["password"] . "<br>" . $_SESSION["logged"]);
 			echo("<p><a href=\"userpage.php\">User Page</a></p>");
 		}
 		else {

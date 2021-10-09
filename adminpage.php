@@ -50,7 +50,10 @@ else
     <title>Adminpage</title>
 </head>
 <body>
-<h1>List of Posts</h1>
-<?php print $display ?>
+  <div id="banner">
+          <a href="create_new_user.php"><button id="NewUserButton">Create New User</button></a>
+  </div>
+  <h1>List of Posts</h1>
+  <?php print $display ?>
 </body>
 </html>
