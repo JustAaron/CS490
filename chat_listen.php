@@ -6,7 +6,8 @@
 	In $_POST[], "other" should be the username of other, "index" should be the index of the message to be echoed.
 	In $_SESSION[], "username" should be the username of the client. Note: the file does not check if the user is valid
 	Output:
-	If the other is valid and there are >0 messages between client and other: echo json-encoded strings where the keys are the names of the database fields ("MessageID", "SenderID", "ReceiverID", "Message") and the values are the values stored in each row of the table.
+	If the other is valid and there are >0 messages between client and other and index is within bounds: echo json-encoded string where the keys are ("isIncoming", "Message") and the values are ([True/False], <message stored in database).
+	If the other is valid and there are >0 messages between client and other but index is not within bounds: echo "out of bounds";
 	If the other is valid but there are 0 messages between client and other: echo "no messages found"
 	If the other is not valid: echo "user not found"
 	*/
@@ -41,7 +42,13 @@
 				else{
 					$arrayofrows = mysqli_fetch_all($message_result);
 					$message_row = $arrayofrows[$stop_condition-1]);
-					$message = array('MessageID'=>$message_row[0], 'SenderID'=>$message_row[1], 'ReceiverID'=$message_row[2], 'Message'=>$message_row[3]);
+					if($_POST['username'] == $message_row[1]){
+						$message = array('isIncoming'=>False, 'Message'=>$message_row[3]);
+					}
+					else{
+						$message = array('isIncoming'=>True, 'Message'=>$message_row[3]);
+					}
+					//$message = array('MessageID'=>$message_row[0], 'SenderID'=>$message_row[1], 'ReceiverID'=$message_row[2], 'Message'=>$message_row[3]);
 					$message = json_encode($message);
 					echo($message);
 				}
