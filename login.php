@@ -71,11 +71,20 @@
 	else
 	{
 		$statement = "select status from alpha_users where username='$client_username'";
-		$query = mysqli_query($db, $statement);
+		($query = mysqli_query($db, $statement)) or die(mysqli_error($db));
 		$status = mysqli_fetch_assoc($query);
 		$admin = $status['status'];
-		if($admin == 1) {
+
+		$statement2 = "select uid from alpha_users where username='$client_username'";
+		($query2 = mysqli_query($db, $statement2)) or die(mysqli_error($db));
+		$uid = mysqli_fetch_assoc($query2);
+		$_SESSION["uid"] = $uid["uid"];
+		if($admin == 1)
+		{
 			echo("<p>Welcome Administrator. You have successfully logged in!</p>");
+			$_SESSION["username"] = $client_username;
+			$_SESSION["password"] = $client_password;
+			echo("<p><a href=\"adminpage.php\">Admin Page</a></p>");
 		}
 		else if($admin == 0) {
 			echo("<p>Welcome, user. You have successfully logged in.</p>");
