@@ -4,7 +4,7 @@
 	The client is the user who is currently logged in. The other is the user who the client wants to chat with.
 	Input:
 	In $_POST[], "other" should be the username of other.
-	In $_SESSION[], "username" should be the username of the client. Note: the file does not check if the user is valid
+	In $_SESSION[], "username" should be the username of the client. Note: the file does not check the $_SESSION[] "password". 
 	Output:
 	If the other is valid and there are >0 messages between client and other and index is within bounds: echo json-encoded string where there are n elements (n=number of messages). Each element has keys ("isIncoming", "Message") and values ([True/False], <message stored in database).
 	Example: [{"isIncoming":true,"Message":"test message from 1 to 0"},{"isIncoming":false,"Message":"test message from 0 to 1"}] 
