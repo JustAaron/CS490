@@ -7,6 +7,7 @@
 	In $_SESSION[], "username" should be the username of the client. Note: the file does not check if the user is valid
 	Output:
 	If the other is valid and there are >0 messages between client and other and index is within bounds: echo json-encoded string where there are n elements (n=number of messages). Each element has keys ("isIncoming", "Message") and values ([True/False], <message stored in database).
+	Example: [{"isIncoming":true,"Message":"test message from 1 to 0"},{"isIncoming":false,"Message":"test message from 0 to 1"}] 
 	If the other is valid but there are 0 messages between client and other: echo "no messages found"
 	If the other is not valid: echo "user not found"
 	*/
@@ -22,7 +23,6 @@
 	
 	function main(){
 		global $conn;
-		$stop_condition = $_POST['index'];
 		$send_query = 'SELECT * FROM alpha_users WHERE username=\'' . $_SESSION['username'] . '\';';
 		$rec_query = 'SELECT * FROM alpha_users WHERE username=\'' . $_POST['other'] . '\';';
 		$send_result = mysqli_query($conn, $send_query);
@@ -44,6 +44,8 @@
 						array_push($a, array('isIncoming'=>True, 'Message'=>$row[3]));
 					}
 				}
+				$str = json_encode($a);
+				echo($str);
 			}
 			else{
 				echo('no messsages found');
