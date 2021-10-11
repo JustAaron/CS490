@@ -1,12 +1,9 @@
-function displayOwnMessage()
+function displayOwnMessage(message)
 {
-    var myMessage = document.getElementById("message").value; //Retrieve message from the text box
     var messageHTML = '<div class="outgoingMessage">' + //Format the message to appear on the chat window
-    '<div class="myMessage">'+ myMessage + '</div>' + 
+    '<div class="myMessage">'+ message + '</div>' + 
     '<div class="spacing"></div>' + '</div>';
-    
     document.getElementById("chatWindow").innerHTML += messageHTML; //add the formatted message to the chat window
-    document.getElementById("message").value = ""; //clear the text box
     
 }
 
@@ -56,35 +53,43 @@ function updateClient(){
     var sendString = "".concat("&other=", other, "&message=", message);
     xhttp.send(sendString);
     
-    displayOwnMessage() //display the message onto the chat window
+    displayOwnMessage(message) //display the message onto the chat window
+    document.getElementById("message").value = ""; //clear the text box
 }
 
 function updateListen(){
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-   	 if(this.readyState == 4 && this.status == 200){
-   		 console.log(this.responseText);
-   		 document.getElementById("chatWindow").value = this.responseText;
-   	 }
-    };
+    var res = "";
+    var index = 0;
+    console.log("HERE");
     var other = document.getElementById("usernameSearch").value; //store the username search
+    var x = 0;    
+    xhttp.onload = function(){
+        if (xhttp.readyState === xhttp.DONE && this.status == 200)
+        {
+            res = this.responseText;
+            console.log(res);
+            if(isJSON(res)){
+                res = json.parse(res);
+                document.getElementById("chatHeader").innerHTML = other; //Set the chat header to who you're chatting with
+                if(res.isIncoming == TRUE)
+                {
+                    displayIncomingMessage(res.Message); //display the incoming message onto the chat window
+                }
+                else
+                {
+                    displayOwnMessage(res.Message);////display the own message onto the chat window
+                }
+            }
+
+        }
+    }
     xhttp.open("POST", "chat_listen.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.onload = function(){
-        res = this.responseText;
-        if(isJSON(res)){
-            var incomingMessage = this.responseText;
-            incomingMessage = json.parse(incomingMessage);
-            document.getElementById("chatHeader").innerHTML = other; //Set the chat header to who you're chatting with
-            displayIncomingMessage(incomingMessage.Message); //display the incoming message onto the chat window}
-        }
-        else if (res == 'user not found'){
-            alert("User not found");
-            document.getElementById("usernameSearch").value = ""; //clear the text box
-        }
-
-    }
-    var sendString = "other=" + other;
+    var sendString = "other=" + other + "&index=" + index;
     xhttp.send(sendString);
+    index++;
+    
     setTimeout(function(){ updateListen(); }, 1000);
 }
+
