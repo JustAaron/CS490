@@ -32,7 +32,7 @@
 			$rec_row = mysqli_fetch_assoc($rec_result);
 			$send_uid =  $send_row['uid'];
 			$rec_uid = $rec_row['uid'];
-			$message_query = 'SELECT * FROM ChatMessages WHERE (SenderID="' . $send_uid . '" AND ReceiverID="' . $rec_uid . '") OR (SenderID="' . $rec_uid . '" AND ReceiverID="' . $send_uid . '");';
+			$message_query = 'SELECT * FROM ChatMessages WHERE (SenderID="' . $send_uid . '" AND ReceiverID="' . $rec_uid . '") OR (SenderID="' . $rec_uid . '" AND ReceiverID="' . $send_uid . '") ORDER BY MessageID ASC;';
 			$message_result = mysqli_query($conn, $message_query);
 			if($message_result && mysqli_num_rows($message_result) > 0){
 				$a = array();
