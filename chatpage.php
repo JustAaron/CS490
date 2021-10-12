@@ -1,7 +1,9 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="text/javascript" src="chat.js"></script>
     <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,11 +16,12 @@
         <textarea class="usernameSearch" id="usernameSearch"></textarea>
     </div>
     <h1 id="chatHeader">Chat</h1>
-    <div class="chatWindow" id="chatWindow"></div>
+    <div class="chatWindow" id="chatWindow">
+    </div>
     <div class="sendMessage" id="sendMessage">
         <textarea class="message" id="message"></textarea>
-        <button class="sendButton" onclick="updateClient()">Send</button>
+        <button class="sendButton" id="sendButton">Send</button>
     </div>
-    
+    <script type="text/javascript" src="chat.js"></script>
 </body>
 </html>
