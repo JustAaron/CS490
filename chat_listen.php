@@ -36,12 +36,12 @@
 			$message_result = mysqli_query($conn, $message_query);
 			if($message_result && mysqli_num_rows($message_result) > 0){
 				$a = array();
-				while($row = mysqli_fetch_row($message_result)){
-					if($row[1] == $send_uid){
-						array_push($a, array('isIncoming'=>False, 'Message'=>$row[3]));
+				while($row = mysqli_fetch_assoc($message_result)){
+					if($send_uid == $row['SenderID']){
+						array_push($a, array('isIncoming'=>False, 'Message'=>$row['Message']));
 					}
 					else{
-						array_push($a, array('isIncoming'=>True, 'Message'=>$row[3]));
+						array_push($a, array('isIncoming'=>True, 'Message'=>$row['Message']));
 					}
 				}
 				$str = json_encode($a);
