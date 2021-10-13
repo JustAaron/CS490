@@ -25,6 +25,7 @@ else
   <tr>
   <th>Post Title</th>
   <th>Post Text</th>
+  <th>Block Posts</th>
   </tr>";
   while($posts_info = mysqli_fetch_array($get_posts_result))
   {
@@ -33,11 +34,30 @@ else
 
     $display .="
     <tr>
-    <td><strong> $post_subject</strong></td>
-    <td align=center>$post_body</td>
+    <form method='post'>
+    <td><strong><input type='hidden' name='post_subject' value='$post_subject' >$post_subject</strong></td>
+    <td align=center><strong>$post_body</strong></td>
+    <td><input type='submit' value='BLOCK'></td>
+    </form>
     </tr>";
   }
   $display .= "</table>";
+
+  function block_posts($db)
+  {
+    echo("<br>The post subject is:" . $_POST["post_subject"]);
+    echo("<br>Executing Function...");
+    $PostSubject = $_POST["post_subject"];
+    echo("<br>" . $PostSubject);
+    $query = "delete from posts where post_subject='$PostSubject'";
+    $result = mysqli_query($db, $query) or die(mysqli_error($db));
+    echo("Post successfully deleted.");
+  }
+  if(isset($_POST["post_subject"]))
+  {
+    echo("<br>Post request received.");
+    block_posts($db);
+  }
 }
 ?>
 <!DOCTYPE html>

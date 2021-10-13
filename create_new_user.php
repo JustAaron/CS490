@@ -24,6 +24,9 @@ function create_new_user($username, $password, $db)
  $result=mysqli_query($db, $insert_user) or die(mysqli_error($db));
  echo("Successfully created new user in database");
 
+ mkdir($username);
+ echo("<br>Successfully created a new user directory");
+
  $new_user = fopen($username . ".php", "w");
  $text = '
  <?php
@@ -84,6 +87,47 @@ function create_new_user($username, $password, $db)
   ';
   fwrite($new_user, $text);
   fclose($new_user);
+  echo("<br>Successfully created a new user profile page.");
+  rename("/afs/cad.njit.edu/u/d/l/dl388/public_html/490TEST/" . $username . ".php", "/afs/cad.njit.edu/u/d/l/dl388/public_html/490TEST/" . $username . "/" . $username . ".php");
+  echo("<br>Successfully moved new user profile page into user directory");
+
+  $new_chat_page = fopen("messages.php", "w");
+  $text = '
+  <?php
+      session_start();
+  ?>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <link rel="stylesheet" href="styles.css">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Chat</title>
+  </head>
+  <body onload="updateListen()">
+      <h4>Search User</h4>
+      <div class="searchUsers" id="searchUsers">
+          <textarea class="usernameSearch" id="usernameSearch"></textarea>
+      </div>
+      <h1 id="chatHeader">Chat</h1>
+      <div class="chatWindow" id="chatWindow">
+      </div>
+      <div class="sendMessage" id="sendMessage">
+          <textarea class="message" id="message"></textarea>
+          <button class="sendButton" id="sendButton">Send</button>
+      </div>
+      <script type="text/javascript" src="chat.js"></script>
+  </body>
+  </html>';
+  fwrite($new_chat_page, $text);
+  fclose($new_chat_page);
+  echo("<br>Successfully created chat page.");
+  rename("/afs/cad.njit.edu/u/d/l/dl388/public_html/490TEST/messages.php", "/afs/cad.njit.edu/u/d/l/dl388/public_html/490TEST/" . $username . "/" . "messages.php");
+  echo("<br> Successfully moved user chat page into user directory.");
+
+  copy("/afs/cad.njit.edu/u/d/l/dl388/public_html/490TEST/styles.css", "/afs/cad.njit.edu/u/d/l/dl388/public_html/490TEST/" . $username . "/styles.css");
+  echo("<br>Copied styling to user directory");
 }
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
