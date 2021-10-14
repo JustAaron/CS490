@@ -5,9 +5,14 @@ function clearSearchBox(){
 function clearResults(){
     document.getElementById("results").innerHTML = "";
 }
-function displayResults(results)
+function displayPostResults(postID, username, subject)
 {
-    var messageHTML = '<div class="res">' + results + '</div>' + '<div class="searchSpace"></div>';
+    var messageHTML = '<div class="res"><a href="postPage.php">' + subject + ' by '+ username + '</a></div>' + '<div class="searchSpace"></div>';
+    document.getElementById("results").innerHTML += messageHTML;
+}
+function displayUserResults(username)
+{
+    var messageHTML = '<div class="res"><a href="username.php">' + username + '</a></div>' + '<div class="searchSpace"></div>';
     document.getElementById("results").innerHTML += messageHTML;
 }
 
@@ -40,7 +45,7 @@ searchForm.addEventListener('submit', function(event){
                         //Users
                         console.log("Searching for a user");
                         var user = res[i].username;
-                        displayResults(user);
+                        displayUserResults(user);
                     }
                     else
                     {
@@ -48,8 +53,7 @@ searchForm.addEventListener('submit', function(event){
                         var postID = res[i].post_id;
                         var subject = res[i].post_subject;
                         var user = res[i].username;
-                        var string = user + " " + postID + " " + subject;
-                        displayResults(string);
+                        displayPostResults(postID, user, subject);
                     }
                 }
             }
