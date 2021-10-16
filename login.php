@@ -92,9 +92,9 @@
 			$_SESSION["username"] = $client_username;
 			$_SESSION["password"] = $client_password;
 			$_SESSION["logged"] = true;
-			echo("session variables set");
+			//echo("session variables set");
 			//echo($client_username . $client_password);
-			echo($_SESSION["username"] . $_SESSION["password"] . "<br>" . $_SESSION["logged"]);
+			//echo($_SESSION["username"] . $_SESSION["password"] . "<br>" . $_SESSION["logged"]);
 			echo("<p><a href=\"userpage.php\">User Page</a></p>");
 		}
 		else {
