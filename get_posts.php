@@ -22,7 +22,7 @@
 			echo($str);
 		}
 		elseif(mysqli_num_rows($result) == 0){
-			echo('no comments');
+			echo('no posts found');
 		}
 		else{
 			echo('database error');
