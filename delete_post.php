@@ -22,7 +22,7 @@
 		$postid = $_POST['postid'];
 		$query = 'DELETE FROM posts WHERE post_id="' . $postid . '";';
 		$result = mysqli_query($conn, $query);
-		if(!result){
+		if(!$result){
 			echo('error while deleting post');
 		}
 		mysqli_free_result($result);
