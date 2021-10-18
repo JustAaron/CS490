@@ -1,5 +1,17 @@
 <?php
 session_start();
+
+function returnToLogin(){
+	session_unset();
+	session_destroy();
+	header("refresh:0, url=login.html");
+	exit();
+}
+
+if(!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']){
+	returnToLogin();
+}
+
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 require("account.php");

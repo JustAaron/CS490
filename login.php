@@ -13,9 +13,7 @@
 	<h1>Login Page</h1>
 
 	<?php
-	//Starts the session and connects to the database. Code can essentially be ignored for right now.
 	/*****************************************************************************************************************************************************/
-	//session_start();
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	ini_set('display_errors', 1);
 	require("account.php");
@@ -85,17 +83,19 @@
 			$_SESSION["username"] = $client_username;
 			$_SESSION["password"] = $client_password;
 			$_SESSION["logged"] = true;
+			$_SESSION["is_admin"] = true;
 			echo("<p><a href=\"adminpage.php\">Admin Page</a></p>");
 		}
 		else if($admin == 0) {
-			echo("<p>Welcome, user. You have successfully logged in.</p>");
+			echo('<p>Welcome, ' . $client_username . '. You have successfully logged in.</p>');
 			$_SESSION["username"] = $client_username;
 			$_SESSION["password"] = $client_password;
 			$_SESSION["logged"] = true;
+			$_SESSION["is_admin"] = false;
 			//echo("session variables set");
 			//echo($client_username . $client_password);
 			//echo($_SESSION["username"] . $_SESSION["password"] . "<br>" . $_SESSION["logged"]);
-			echo("<p><a href=\"userpage.php\">User Page</a></p>");
+			echo('<p><a href="' . $client_username . '/' . $client_username . '.php">' . $client_username . '\'s Page</a></p>');
 		}
 		else {
 			echo("<p>Unexpected user account type</p><br><p>exiting...</p>");

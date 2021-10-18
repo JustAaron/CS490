@@ -61,7 +61,7 @@ searchForm.addEventListener('submit', function(event){ //run everytime the searc
     }
     if(document.getElementById('postRadio').checked) //call search_post if the user selected posts
     {
-        xhttp.open("POST", "search_post.php", true);
+        xhttp.open("POST", "../search_post.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var sendString = 'searchpost=' + search;
         xhttp.send(sendString);
@@ -70,7 +70,7 @@ searchForm.addEventListener('submit', function(event){ //run everytime the searc
     }
     else if(document.getElementById('userRadio').checked) //call search_user if the user selected users
     {
-        xhttp.open("POST", "search_user.php", true);
+        xhttp.open("POST", "../search_user.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var sendString = 'searchuser=' + search;
         xhttp.send(sendString);

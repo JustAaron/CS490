@@ -43,7 +43,7 @@ function updateClient(){
       }
     };
     var other = document.getElementById("usernameSearch").value; // other is the user you want to chat with
-    xhttp.open("POST", "chat_client.php", true);    //send the other username and message to chat_client
+    xhttp.open("POST", "../chat_client.php", true);    //send the other username and message to chat_client
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var sendString = "".concat("other=", other, "&message=", message);
     xhttp.send(sendString); 
@@ -88,7 +88,7 @@ function updateListen(){
             }
         }
     }
-    xhttp.open("POST", "chat_listen.php", true);    //send the other username to chat_listen
+    xhttp.open("POST", "../chat_listen.php", true);    //send the other username to chat_listen
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var sendString = "other=" + other; 
     xhttp.send(sendString);
