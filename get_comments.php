@@ -24,7 +24,7 @@
 	function main(){
 		global $conn;
 		$post_id = $_POST['post_id'];
-		$query = 'SELECT c.comment, a.username FROM Comments c, alpha_users a WHERE c.post_id=' . $post_id . ' AND c.uid=a.uid;';
+		$query = 'SELECT c.comment, a.username FROM Comments c, alpha_users a WHERE c.post_id=' . $post_id . ' AND c.uid=a.uid ORDER BY comment_id ASC;';
 		$result = mysqli_query($conn, $query);
 		if($result && mysqli_num_rows($result) > 0){
 			$comment_list = array();
