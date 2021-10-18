@@ -1,8 +1,11 @@
 <?php
+	/*
+	Functionality: Insert into Posts table and create 
+	*/
 	session_start();
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	ini_set('display_errors', 1);
-	require('../account.php');
+	require('account.php');
 	$conn = mysqli_connect($hostname, $username, $password, $project);
 	if(mysqli_connect_errno()){
 		//echo "<p>Failed to connect to MySQL: " . mysqli_connect_error(). "</p>";
@@ -26,14 +29,9 @@
 			<?php
 				echo(\'<p>this is where a post should go<p>\');
 			?>
-			<p><a href="../testing.php">Back to original</a></p>
 		</body>
 		</html>
 		';
-		
-		if(!is_dir($post_username)){
-			mkdir($post_username);
-		}
 		$myfile = fopen($post_username . '/' . $max_post_id . '.php', "w");
 		fwrite($myfile, $text);
 		fclose($myfile);
@@ -60,6 +58,9 @@
 		$result = mysqli_query($conn, $query);
 		if($result && mysqli_num_rows($result) == 1){
 			$row = mysqli_fetch_assoc($result);
+			if($row['max_pid'] == null){
+				return 0;
+			}
 			$max = $row['max_pid'];
 			return $max;
 		}
@@ -75,8 +76,9 @@
 		//echo($max_post_id+1);
 		insertDatabase($max_post_id+1);
 		writeFile($max_post_id+1);
-		echo('<br><a href="' . $_SESSION['username'] . '/' . strval($max_post_id+1) . '.php">Created page</a></p>');
+		echo('<br><a href="' . $_SESSION['username'] . '/' . strval($max_post_id+1) . '.php">Created page</a>');
 	}
 	main();
 	mysqli_close($conn);
+	return;
 ?>

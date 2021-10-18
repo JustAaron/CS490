@@ -43,18 +43,44 @@ else
   {
     $post_subject = $posts_info["post_subject"];
     $post_body = $posts_info["post_body"];
-
+	
+	$post_id = $posts_info['post_id'];  // added
+	
     $display .="
     <tr>
     <form method='post'>
     <td><strong><input type='hidden' name='post_subject' value='$post_subject' >$post_subject</strong></td>
     <td align=center><strong>$post_body</strong></td>
+	
+	<td><input type='hidden' name='post_id' value='$post_id'></td>
+	
     <td><input type='submit' value='BLOCK'></td>
     </form>
     </tr>";
   }
   $display .= "</table>";
 
+  function block_post_page(){  // added by Aaron
+    global $db;
+	$post_id = $_POST['post_id'];
+	$uid_query = 'SELECT a.username, p.post_id FROM alpha_users a, posts p WHERE p.post_id=' . $post_id . ' AND a.uid=p.uid;';
+	$result = mysqli_query($db, $uid_query);
+	if($result){
+		$row = mysqli_fetch_assoc($result);
+		$username = $row['username'];
+		$post_id = $row['post_id'];
+		if(unlink('./' . $username . '/' . $post_id . '.php')){
+			echo('<br>post page deleted');
+		}
+		else{
+			die('<br>error while deleting post page');
+		}
+	}
+	else{
+		die(mysqli_error($db));
+	}
+  }
+  
   function block_posts($db)
   {
     echo("<br>The post subject is:" . $_POST["post_subject"]);
@@ -68,7 +94,9 @@ else
   if(isset($_POST["post_subject"]))
   {
     echo("<br>Post request received.");
+	block_post_page();  // added
     block_posts($db);
+	$_POST = array();  // added
   }
 }
 ?>

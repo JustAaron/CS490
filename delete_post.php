@@ -17,7 +17,9 @@
 		exit();
 	}
 	
-	function main(){
+	
+	
+	function deleteDatabase($post_id){
 		global $conn;
 		$postid = $_POST['postid'];
 		$query = 'DELETE FROM posts WHERE post_id="' . $postid . '";';
@@ -26,6 +28,10 @@
 			echo('error while deleting post');
 		}
 		mysqli_free_result($result);
+	}
+	
+	function main(){
+		
 	}
 	
 	main();

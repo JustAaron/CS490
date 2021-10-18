@@ -7,12 +7,12 @@ function clearResults(){ //Clear the results of the previous search
 }
 function displayPostResults(postID, username, subject) //Display the posts that match the search
 {
-    var messageHTML = '<div class="res"><a href="postPage.php">' + subject + ' by '+ username + '</a></div>' + '<div class="searchSpace"></div>';
+    var messageHTML = '<div class="res"><a href="../' + username + '/' + postID + '.php">' + subject + ' by '+ username + '</a></div>' + '<div class="searchSpace"></div>';
     document.getElementById("results").innerHTML += messageHTML;
 }
 function displayUserResults(username) //Display the users that match the search
 {
-    var messageHTML = '<div class="res"><a href="username.php">' + username + '</a></div>' + '<div class="searchSpace"></div>';
+    var messageHTML = '<div class="res"><a href="../' + username + '/' + username + '.php">' + username + '</a></div>' + '<div class="searchSpace"></div>';
     document.getElementById("results").innerHTML += messageHTML;
 }
 

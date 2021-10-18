@@ -21,7 +21,23 @@
 		exit();
 	}
 	
-	function main(){
+	function getMaxMessageID(){
+		echo('enter maxmessageid');
+		global $conn;
+		$query = 'SELECT MAX(MessageID) as max_message_id FROM ChatMessages;';
+		$result = mysqli_query($conn, $query);
+		if($result && mysqli_num_rows($result) == 1){
+			$row = mysqli_fetch_assoc($result);
+			$max = $row['max_message_id'];
+			if($max == null){
+				return 0;
+			}
+			return $max;
+		}
+		return -1;
+	}
+	
+	function insertDatabase($max_message_id){
 		global $conn;
 		$client_username = $_SESSION['username'];
 		$other_username = $_POST['other'];
@@ -56,7 +72,7 @@
 			echo('user not found');
 			return;
 		}
-		$query = 'INSERT INTO ChatMessages (SenderID, ReceiverID, Message) VALUES (' . $client_id . ', ' . $other_id . ', "' . $message . '");';
+		$query = 'INSERT INTO ChatMessages (MessageID, SenderID, ReceiverID, Message) VALUES (' . $max_message_id . ',' . $client_id . ', ' . $other_id . ', "' . $message . '");';
 		//echo($query);
 		$result = mysqli_query($conn, $query);
 		if($result){
@@ -66,7 +82,17 @@
 			echo('error while inserting values');
 		}
 	}
-	main();
 	
+	function main(){
+		echo('enter main()');
+		$max_message_id = getMaxMessageID();
+		if($max_message_id == -1){
+			echo('error while getting max_message_id');
+			return;
+		}
+		//echo($max_message_id);
+		insertDatabase($max_message_id+1);
+	}
+	main();
 	mysqli_close($conn);
 ?>

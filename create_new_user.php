@@ -40,7 +40,7 @@
 			echo('<br><p>' . mysqli_error($conn) . '</p>');
 		}
 		else{
-			echo("Successfully created new user in database");
+			echo("<p>Successfully created new user in database</p>");
 		}
 		
 		if(!is_dir($username)){

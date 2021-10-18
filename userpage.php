@@ -14,13 +14,16 @@ if(!isset($_SESSION["logged"]))
 }
 
 if(!isset($_SESSION['username']) || $_SESSION['username'] != basename(__FILE__, '.php')){
-	returnToLogin();
+	$isOther = true;
+}
+else{
+	$isOther = false;
 }
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+/*if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	ini_set('display_errors', 1);
-	require("account.php");
+	require("../account.php");
 
 	$db = mysqli_connect($hostname, $username, $password, $project);
 	if (mysqli_connect_errno())
@@ -36,7 +39,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	$add_post = "insert into posts(post_subject, post_body, uid) values ('$post_subject', '$post_text', '$post_uid')";
 	($result = mysqli_query($db, $add_post)) or die(mysqli_error($db));
-}
+}*/
 ?>
 
 <!DOCTYPE html>
@@ -46,22 +49,32 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo($_SESSION['username']) ?></title>
+    <title><?php echo(basename(__FILE__, '.php')); ?></title>
 </head>
 <body>
     <div id="banner">
-            <a href="chatpage.php"><button id="MessageButton">Messages</button></a>
-            <a href="searchpage.php"><button id="SearchButton" type="button">Search</button></a>
+            <a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>"><button id="MessageButton">Messages</button></a>
+            <a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>"><button id="SearchButton" type="button">Search</button></a>
     </div>
     <div id="pageHeader">
-        <h1>Username</h1>
+        <h1><?php echo(basename(__FILE__, '.php')); ?></h1>
     </div>
-    <form method="post">
-      <p><strong>Post Subject:</strong><br>
-        <input type="text" id="post_subject" name="post_subject" size=40 maxlength=50>
-        <p><strong>Post Text:</strong><br>
-          <textarea id="post_text" name="post_text" rows=8 cols=40 wrap=virtual></textarea>
-          <p><input type="submit" value="Submit"></p>
-    </form>
+	
+	<?php
+		$post_form_html ='
+		<form action="../add_post.php" method="post">
+		  <p><strong>Post Subject:</strong><br>
+			<input type="text" id="post_subject" name="post_subject" size=40 maxlength=50>
+			<p><strong>Post Text:</strong><br>
+			  <textarea id="post_text" name="post_text" rows=8 cols=40 wrap=virtual></textarea>
+			  <p><input type="submit" value="Submit"></p>
+		</form>';
+		if(!$isOther){
+			echo($post_form_html);
+		}
+		else{
+			echo('<p>You are on another user\'s page</p>');
+		}
+	?>
 </body>
 </html>

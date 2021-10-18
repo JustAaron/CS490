@@ -70,6 +70,13 @@ function updateListen(){
             {
                 console.log("no messages found");
             }
+			else if(res.includes("error while getting max_message_id"))
+			{
+				console.log("error while getting max_message_id");
+			}
+			else if(res.includes("empty message")){
+				console.log("empty message");
+			}
             else
             {
                 document.getElementById("chatHeader").innerHTML = other; //Set the chat header to who you're chatting with
