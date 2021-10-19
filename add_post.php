@@ -13,28 +13,9 @@
 	}
 	
 	function writeFile($max_post_id){
-		/*
-		TODO: Write the real post file here
-		*/
 		global $conn;
 		$post_username = $_SESSION['username'];
-		echo($post_username . '/' . $max_post_id . '.php');
-		$text = '<!DOCTYPE html>
-		<html>
-		<head>
-			<title>test post</title>
-			<link rel="stylesheet" href="../styles.css"/>
-		</head>
-		<body>
-			<?php
-				echo(\'<p>this is where a post should go<p>\');
-			?>
-		</body>
-		</html>
-		';
-		$myfile = fopen($post_username . '/' . $max_post_id . '.php', "w");
-		fwrite($myfile, $text);
-		fclose($myfile);
+		copy('postpage.php', $post_username . '/' . $max_post_id . '.php');
 	}
 	
 	function insertDatabase($max_post_id){
