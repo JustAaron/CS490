@@ -7,7 +7,9 @@ function returnToLogin(){
 	header("refresh:0, url=../login.html");
 	exit();
 }
-
+if(array_key_exists('LogoutButton',$_POST)){
+	returntoLogin();
+}
 if(!isset($_SESSION["logged"]))
 {
 	returnToLogin();
@@ -51,18 +53,21 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo(basename(__FILE__, '.php')); ?></title>
 </head>
-<body>
-    <div id="banner">
+<body onload="loadPosts()">
+<div id="banner">
             <a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>"><button id="MessageButton">Messages</button></a>
             <a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>"><button id="SearchButton" type="button">Search</button></a>
-    </div>
+            <form method="post">
+                <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+            </form>
+    </div><br>
     <div id="pageHeader">
         <h1><?php echo(basename(__FILE__, '.php')); ?></h1>
     </div>
 	
 	<?php
 		$post_form_html ='
-		<form action="../add_post.php" method="post">
+		<form id="postForm">
 		  <p><strong>Post Subject:</strong><br>
 			<input type="text" id="post_subject" name="post_subject" size=40 maxlength=50>
 			<p><strong>Post Text:</strong><br>
@@ -76,5 +81,7 @@ else{
 			echo('<p>You are on another user\'s page</p>');
 		}
 	?>
+	<div class="userPosts" id="userPosts"></div>
+	<script type="text/javascript" src="../user.js"></script>
 </body>
 </html>

@@ -49,7 +49,6 @@ input[type=submit] {
 }
 
 #banner {
-	background-color:white;
 	margin:auto;
 }
 #MessageButton {
@@ -64,9 +63,15 @@ input[type=submit] {
 	width: 100px;
 	height: 50px;
 	color: blue;
+	float: left;
+}
+#LogoutButton{
+  text-align: center;
+	width: 100px;
+	height: 50px;
+	color: blue;
 	float: right;
 }
-
 #chatHeader {
     /*background:darkblue;*/
 	text-decoration: underline;
@@ -207,4 +212,11 @@ a.returnButton {
 }
 .writeComment{
 	width: 400px;
+}
+.userPostLink{
+	font-size:30px;
+	background-color:white;
+	text-align:center;
+	width: 400px;
+	margin: 0 auto;
 }
