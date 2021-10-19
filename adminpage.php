@@ -30,7 +30,7 @@ if(mysqli_num_rows($get_posts_result) == 0)
 {
   $display = "<p><strong>There are no posts</strong></p>";
 }
-else
+elseif(mysqli_num_rows($get_posts_result) > 0)
 {
   $display = "
   <table cellpadding=3 cellspacing=1 border=1>
@@ -48,13 +48,11 @@ else
 	
     $display .="
     <tr>
+	<td><strong><p>$post_subject</p></strong></td>
+    <td><strong><p>$post_body</p></strong></td>
     <form method='post'>
-    <td><strong><input type='hidden' name='post_subject' value='$post_subject' >$post_subject</strong></td>
-    <td align=center><strong>$post_body</strong></td>
-	
-	<td><input type='hidden' name='post_id' value='$post_id'></td>
-	
-    <td><input type='submit' value='BLOCK'></td>
+		<input type='hidden' name='post_id' value='$post_id'>
+		<td><input type='submit' value='BLOCK'></td>
     </form>
     </tr>";
   }
@@ -81,7 +79,15 @@ else
 	}
   }
   
-  function block_posts($db)
+  function isPostExist(){  // added by Aaron
+	  global $db;
+	  $post_id = $_POST['post_id'];
+	  $query = 'SELECT * FROM posts WHERE post_id=' . $post_id . ';';
+	  $result = mysqli_query($db, $query);
+	  return ($result && mysqli_num_rows($result) > 0);
+  }
+  
+  /*function block_posts($db)
   {
     echo("<br>The post subject is:" . $_POST["post_subject"]);
     echo("<br>Executing Function...");
@@ -90,14 +96,36 @@ else
     $query = "delete from posts where post_subject='$PostSubject'";
     $result = mysqli_query($db, $query) or die(mysqli_error($db));
     echo("Post successfully deleted.");
+  }*/
+  
+  function block_posts($db)
+  {
+	  global $db;
+	  $post_id = $_POST['post_id'];
+	  $query = 'DELETE FROM posts WHERE post_id=' . $post_id . ';';
+	  $result = mysqli_query($db, $query);
+	  if(!$result){
+		  die('<br>error while deleting from database:' . mysqli_error($db));
+	  }
+	  echo('<br>Post successfully deleted.');
   }
-  if(isset($_POST["post_subject"]))
+  
+  if(isset($_POST["post_id"]))
   {
     echo("<br>Post request received.");
-	block_post_page();  // added
-    block_posts($db);
-	$_POST = array();  // added
+	if(isPostExist()){
+		block_post_page();  // added
+		block_posts($db);
+		$_POST = array();  // added
+	}
+	else{
+		echo('<br>Post does not exist');
+	}
   }
+}
+else
+{
+	echo('<br>Database error');
 }
 ?>
 <!DOCTYPE html>
