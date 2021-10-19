@@ -79,6 +79,13 @@ input[type=submit] {
 	color: blue;
 	float: right;
 }
+#NewUserButton{
+	text-align: center;
+	width: 100px;
+	height: 50px;
+	color: blue;
+	float: left;
+}
 #chatHeader {
     /*background:darkblue;*/
 	text-decoration: underline;

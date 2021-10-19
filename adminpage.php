@@ -7,7 +7,9 @@ function returnToLogin(){
 	header("refresh:0, url=login.html");
 	exit();
 }
-
+if(array_key_exists('LogoutButton',$_POST)){
+  returntoLogin();
+}
 if(!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']){
 	returnToLogin();
 }
@@ -140,6 +142,9 @@ else
 <body>
   <div id="banner">
           <a href="create_new_user.php"><button id="NewUserButton">Create New User</button></a>
+          <form method="post">
+            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+        </form>
   </div>
   <h1>List of Posts</h1>
   <?php print $display ?>
