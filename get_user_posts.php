@@ -11,7 +11,7 @@
 	function main(){
 		global $conn;
 		$username = $_POST['username'];
-		$query = 'SELECT p.post_subject, p.post_id FROM posts p, alpha_users a WHERE a.username=' . $username . ' AND p.uid=a.uid;';
+		$query = 'SELECT p.post_subject, p.post_id FROM posts p, alpha_users a WHERE a.username="' . $username . '" AND p.uid=a.uid;';
 		$result = mysqli_query($conn, $query);
 		if($result && mysqli_num_rows($result) > 0){
 			$post_list = array();
