@@ -54,12 +54,12 @@ else{
     <title><?php echo(basename(__FILE__, '.php')); ?></title>
 </head>
 <body onload="loadPosts()">
-<div id="banner">
-            <a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>"><button id="MessageButton">Messages</button></a>
-            <a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>"><button id="SearchButton" type="button">Search</button></a>
-            <form method="post">
-                <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
-            </form>
+	<div id="banner">
+        <a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>"><button id="MessageButton">Messages</button></a>
+        <a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>"><button id="SearchButton" type="button">Search</button></a>
+        <form method="post">
+            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+        </form>
     </div><br>
     <div id="pageHeader">
         <h1><?php echo(basename(__FILE__, '.php')); ?></h1>

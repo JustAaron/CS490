@@ -58,6 +58,13 @@ input[type=submit] {
 	color: blue;
 	float: left;
 }
+#HomeButton{
+	text-align: center;
+	width: 100px;
+	height: 50px;
+	color: blue;
+	float: left;
+}
 #SearchButton {
 	text-align: center;
 	width: 100px;
