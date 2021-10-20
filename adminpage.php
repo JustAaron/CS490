@@ -1,19 +1,5 @@
 <?php
 session_start();
-
-function returnToLogin(){
-	session_unset();
-	session_destroy();
-	header("refresh:0, url=login.html");
-	exit();
-}
-if(array_key_exists('LogoutButton',$_POST)){
-  returntoLogin();
-}
-if(!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']){
-	returnToLogin();
-}
-
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 require("account.php");
@@ -32,7 +18,7 @@ if(mysqli_num_rows($get_posts_result) == 0)
 {
   $display = "<p><strong>There are no posts</strong></p>";
 }
-elseif(mysqli_num_rows($get_posts_result) > 0)
+else
 {
   $display = "
   <table cellpadding=3 cellspacing=1 border=1>
@@ -45,51 +31,19 @@ elseif(mysqli_num_rows($get_posts_result) > 0)
   {
     $post_subject = $posts_info["post_subject"];
     $post_body = $posts_info["post_body"];
-	
-	$post_id = $posts_info['post_id'];  // added
-	
+
     $display .="
     <tr>
-	<td><strong><p>$post_subject</p></strong></td>
-    <td><strong><p>$post_body</p></strong></td>
     <form method='post'>
-		<input type='hidden' name='post_id' value='$post_id'>
-		<td><input type='submit' value='BLOCK'></td>
+    <td><strong><input type='hidden' name='post_subject' value='$post_subject' >$post_subject</strong></td>
+    <td align=center><strong>$post_body</strong></td>
+    <td><input type='submit' value='BLOCK'></td>
     </form>
     </tr>";
   }
   $display .= "</table>";
 
-  function block_post_page(){  // added by Aaron
-    global $db;
-	$post_id = $_POST['post_id'];
-	$uid_query = 'SELECT a.username, p.post_id FROM alpha_users a, posts p WHERE p.post_id=' . $post_id . ' AND a.uid=p.uid;';
-	$result = mysqli_query($db, $uid_query);
-	if($result){
-		$row = mysqli_fetch_assoc($result);
-		$username = $row['username'];
-		$post_id = $row['post_id'];
-		if(unlink('./' . $username . '/' . $post_id . '.php')){
-			echo('<br>post page deleted');
-		}
-		else{
-			die('<br>error while deleting post page');
-		}
-	}
-	else{
-		die(mysqli_error($db));
-	}
-  }
-  
-  function isPostExist(){  // added by Aaron
-	  global $db;
-	  $post_id = $_POST['post_id'];
-	  $query = 'SELECT * FROM posts WHERE post_id=' . $post_id . ';';
-	  $result = mysqli_query($db, $query);
-	  return ($result && mysqli_num_rows($result) > 0);
-  }
-  
-  /*function block_posts($db)
+  function block_posts($db)
   {
     echo("<br>The post subject is:" . $_POST["post_subject"]);
     echo("<br>Executing Function...");
@@ -98,36 +52,12 @@ elseif(mysqli_num_rows($get_posts_result) > 0)
     $query = "delete from posts where post_subject='$PostSubject'";
     $result = mysqli_query($db, $query) or die(mysqli_error($db));
     echo("Post successfully deleted.");
-  }*/
-  
-  function block_posts($db)
-  {
-	  global $db;
-	  $post_id = $_POST['post_id'];
-	  $query = 'DELETE FROM posts WHERE post_id=' . $post_id . ';';
-	  $result = mysqli_query($db, $query);
-	  if(!$result){
-		  die('<br>error while deleting from database:' . mysqli_error($db));
-	  }
-	  echo('<br>Post successfully deleted.');
   }
-  
-  if(isset($_POST["post_id"]))
+  if(isset($_POST["post_subject"]))
   {
     echo("<br>Post request received.");
-	if(isPostExist()){
-		block_post_page();  // added
-		block_posts($db);
-		$_POST = array();  // added
-	}
-	else{
-		echo('<br>Post does not exist');
-	}
+    block_posts($db);
   }
-}
-else
-{
-	echo('<br>Database error');
 }
 ?>
 <!DOCTYPE html>
@@ -142,9 +72,6 @@ else
 <body>
   <div id="banner">
           <a href="create_new_user.php"><button id="NewUserButton">Create New User</button></a>
-          <form method="post">
-            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
-        </form>
   </div>
   <h1>List of Posts</h1>
   <?php print $display ?>
