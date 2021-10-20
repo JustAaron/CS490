@@ -21,7 +21,7 @@ $(document).ready(function (e){
       processData: false,
       success: function(data){
         if(data == 0){
-          alert("Empty Fields").
+          alert("Empty Fields");
           console.log(data);
         }
         else{
