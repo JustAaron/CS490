@@ -1,5 +1,15 @@
 <?php
     session_start();
+
+    function returnToLogin(){
+        session_unset();
+        session_destroy();
+        header("refresh:0, url=../login.html");
+        exit();
+    }
+    if(array_key_exists('LogoutButton',$_POST)){
+        returntoLogin();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +21,14 @@
     <title>Post</title>
 </head>
 <body onload="displayPost()">
+    <div id="banner">
+        <a href=" <?php echo('../' . $_SESSION['username'] . '/' .$_SESSION['username'] . '.php'); ?>"><button id="HomeButton">Home</button></a>
+        <a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>"><button id="MessageButton">Messages</button></a>
+        <a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>"><button id="SearchButton" type="button">Search</button></a>
+        <form method="post">
+            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+        </form>
+    </div><br>
     <h1>Post</h1>
     <div class="postComments">
         <div class="post" id="post">

@@ -5,10 +5,18 @@
 		header("refresh:0, url=login.html");
 		exit();
 	}
+	function returnToLogin(){
+		session_unset();
+		session_destroy();
+		header("refresh:0, url=login.html");
+		exit();
+	}
+	if(array_key_exists('LogoutButton',$_POST)){
+	  returntoLogin();
+	}
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	ini_set('display_errors', 1);
 	require("account.php");
-
 	$conn = mysqli_connect($hostname, $username, $password, $project);
 	if (mysqli_connect_errno())
 	{
@@ -84,6 +92,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Create User Page</title>
 	</head>
+	<div id="banner">
+        	<a href="adminpage.php"><button id="NewUserButton">Home</button></a>
+          	<form method="post">
+            		<input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+        	</form>
+  	</div>
 	<div id="pageHeader">
 		<h1>Create a New User</h1>
 	</div>
