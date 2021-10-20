@@ -64,14 +64,16 @@ else{
     <div id="pageHeader">
         <h1><?php echo(basename(__FILE__, '.php')); ?></h1>
     </div>
-	
+
 	<?php
 		$post_form_html ='
-		<form id="postForm">
+		<form id="postForm" enctype="multipart/form-data">
 		  <p><strong>Post Subject:</strong><br>
 			<input type="text" id="post_subject" name="post_subject" size=40 maxlength=50>
 			<p><strong>Post Text:</strong><br>
 			  <textarea id="post_text" name="post_text" rows=8 cols=40 wrap=virtual></textarea>
+			<p><strong>Select Image</strong><br>
+			<input type="file" name="image_file" id="image_file">
 			  <p><input type="submit" value="Submit"></p>
 		</form>';
 		if(!$isOther){
@@ -82,6 +84,10 @@ else{
 		}
 	?>
 	<div class="userPosts" id="userPosts"></div>
+	<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
 	<script type="text/javascript" src="../user.js"></script>
 </body>
 </html>

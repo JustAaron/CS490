@@ -8,29 +8,28 @@ function displayPostLink(post_subject, post_id)
     postHTML = '<div class="userPostLink"><a href="../' + username + '/' + post_id + '.php">' + post_subject + '</a></div>' + '<div class="searchSpace"></div>';
     document.getElementById('userPosts').innerHTML += postHTML;
 }
-searchForm.addEventListener('submit', function(event){ //run everytime the search button is clicked
-    event.preventDefault();
-    var xhttp = new XMLHttpRequest();
-    var post_subject = document.getElementById('post_subject').value;
-    var post_text = document.getElementById('post_text').value;
-    xhttp.onload = function(){ //Runs everytime a response returns after send()
-        if(this.readyState == 4 && this.status == 200)
-        {
-            res = this.responseText;
-            console.log("Did it come in here?");
-            if(res.includes('database error'))
-            {
-                alert('Error adding post');
-            }
-            document.getElementById('post_subject').value = "";
-            document.getElementById('post_text').value = "";
+
+$(document).ready(function (e){
+  $("#postForm").on("submit", function (e){
+    e.preventDefault();
+    $.ajax({
+      url: "../add_post.php",
+      type: "POST",
+      data: new FormData(searchForm),
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function(data){
+        if(data == 0){
+          console.log("Failure");
         }
-    }
-    xhttp.open("POST", "../add_post.php", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var sendString = 'post_subject=' + post_subject + '&post_text=' + post_text;
-    xhttp.send(sendString);
-} )
+        else{
+          console.log("Success");
+        }
+      }
+    });
+  });
+});
 
 function loadPosts()
 {

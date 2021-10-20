@@ -1,10 +1,10 @@
 <?php
 	/*
-	Functionality: Insert into Posts table and create the post file using given information. Should be used when a user creates a post. 
-	Input: 
+	Functionality: Insert into Posts table and create the post file using given information. Should be used when a user creates a post.
+	Input:
 	In $_POST[], "post_subject" should be the subject line, "post_text" should be the body of the post.
 	In $_SESSION[], "username" should be the username of the poster, "uid" should be the uid of the poster.
-	Output: 
+	Output:
 	If the database insert and copying file was successful: echo "success"
 	If the database insert failed: echo "database error"
 	If the database insert succeeded but copying file failed: echo "copy file error"
@@ -18,7 +18,7 @@
 		//echo "<p>Failed to connect to MySQL: " . mysqli_connect_error(). "</p>";
 		exit();
 	}
-	
+
 	function writeFile($max_post_id){
 		global $conn;
 		$post_username = $_SESSION['username'];
@@ -27,24 +27,35 @@
 			return;
 		}
 	}
-	
+
 	function insertDatabase($max_post_id){
 		global $conn;
-		$post_subject = $_POST['post_subject'];
-		$post_text = $_POST['post_text'];
-		$post_uid = $_SESSION['uid'];
-		//echo("<br>Successfully got values for SQL statement<br>");
-
-		$add_post = 'insert into posts(post_id, post_subject, post_body, uid) values (' . $max_post_id . ',"' . $post_subject . '","' . $post_text . '",' . $post_uid . ');';
-		$result = mysqli_query($conn, $add_post);
-		if(!$result){
-			echo('database error');
+		$response = 1;
+		if(empty($_POST["post_subject"] || empty($_POST["post_text"])))
+		{
+			$response = 0;
+			echo $response;
 			return false;
 		}
-		return true;
-		//echo("<br> Successfully added post.");
-	}
-	
+		else
+		{
+			$post_subject = $_POST['post_subject'];
+			$post_text = $_POST['post_text'];
+			$post_uid = $_SESSION['uid'];
+			$post_image = "images/" . basename($_FILES["image_file"]["name"]);
+			move_uploaded_file($_FILES["image_file"]["tmp_name"], $post_image);
+			//echo("<br>Successfully got values for SQL statement<br>");
+			$add_post = 'insert into posts(post_id, post_subject, post_body, uid, image_path) values (' . $max_post_id . ',"' . $post_subject . '","' . $post_text . '",' . $post_uid . ', "' . $post_image . '");';
+			$result = mysqli_query($conn, $add_post);
+			if(!$result){
+				echo('database error');
+				return false;
+			}
+			return true;
+			//echo("<br> Successfully added post.");
+		}
+}
+
 	function getMaxPostID(){
 		global $conn;
 		$query = 'SELECT MAX(post_id) as max_pid FROM posts;';

@@ -7,9 +7,9 @@ function addComment(username, comment) //Display the given comment in the commen
     var commentHTML = '<p>' + username + ': ' +  comment + '</p>';
     document.getElementById("comments").innerHTML += commentHTML;
 }
-function displayPostContent(subject, poster, body) //Display the post on screen
+function displayPostContent(subject, poster, body, image) //Display the post on screen
 {
-    var postHTML = '<p>' + subject + '</p><p> By: ' + poster + '</p><br> <p>' + body + '</p>';
+    var postHTML = '<p>' + subject + '</p><p> By: ' + poster + '</p><br> <p>' + body + '</p>' + '<img src=../' + image + '>';
     document.getElementById('post').innerHTML += postHTML;
 }
 function displayPost()
@@ -35,13 +35,14 @@ function displayPost()
                 var subject = res[0].post_subject;
                 var poster = res[0].username;
                 var body = res[0].post_body;
-                displayPostContent(subject, poster, body);
+                var image_path = res[0].image_path;
+                displayPostContent(subject, poster, body, image_path);
             }
         }
     }
     xhttp.open("POST", "../get_posts.php", true);    //send postID to get_posts
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var sendString = "post_id=" + postID; 
+    var sendString = "post_id=" + postID;
     xhttp.send(sendString);
     displayComments(); //call this function to activate the listening for comments
 }
@@ -76,7 +77,7 @@ function displayComments(){
     }
     xhttp.open("POST", "../get_comments.php", true);    //send the postID to get_comments
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    var sendString = "post_id=" + postID; 
+    var sendString = "post_id=" + postID;
     xhttp.send(sendString);
 
     setTimeout(function(){ displayComments(); }, 1000); // Run the function again to listen for new comments
@@ -99,7 +100,7 @@ sendButton.onclick = function(event) {
     xhttp.open("POST", "../add_comment.php", true);    //send the postID and comment to add_comment
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var comment = document.getElementById('writeComment').value;
-    var sendString = "post_id=" + postID + "&comment=" + comment; 
+    var sendString = "post_id=" + postID + "&comment=" + comment;
     xhttp.send(sendString);
     document.getElementById('writeComment').value = ""; //clear the text box
 }
