@@ -1,5 +1,19 @@
 <?php
 session_start();
+
+function returnToLogin(){
+	session_unset();
+	session_destroy();
+	header("refresh:0, url=login.html");
+	exit();
+}
+if(array_key_exists('LogoutButton',$_POST)){
+  returntoLogin();
+}
+if(!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']){
+	returnToLogin();
+}
+
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 require("account.php");
@@ -72,6 +86,9 @@ else
 <body>
   <div id="banner">
           <a href="create_new_user.php"><button id="NewUserButton">Create New User</button></a>
+          <form method="post">
+            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+          </form>
   </div>
   <h1>List of Posts</h1>
   <?php print $display ?>
