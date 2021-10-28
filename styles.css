@@ -3,14 +3,23 @@
 body {
 	background-image: linear-gradient(to right, #183397, #AEB3C2);
 }
-
-h1,h2,h3 {
+.chatpagebody{
+  background-image: white;
+}
+h1,h3 {
 	color:#ffffff;
 	text-align:center;
 	font-family:"Times New Roman", serif;
 	font-size: 50px;
 }
-
+h2{
+    color: black;
+    display: block;
+    padding: 0;
+    text-align:center;
+	font-family:"Century Schoolbook", serif;
+	font-size: 50px;
+}
 h4,h5,h6,p {
 	color:#ffffff;
 	text-align:center;
@@ -26,7 +35,6 @@ form.loginForm {
 	padding: 40px;
 	margin: 0 auto;
 	background-color:#E6E0E0
-
 }
 
 label[for=password],label[for=username] {
@@ -42,10 +50,6 @@ input.password, input.username {
 	width:200px;
 	padding:1px;
 	margin:5px;
-}
-
-input[type=submit] {
-	width:100px;
 }
 
 #banner {
@@ -91,23 +95,40 @@ input[type=submit] {
 	text-decoration: underline;
 	text-decoration-color:darkblue;
 }
-
-.chatWindow {
-    height:400px;
+.chatElements{
+    width: 1100px;
+    height: 500px;
+    margin: 0 auto;
+}
+.chatting{
+    width: 600px;
+    float: right;
+    margin-right: auto;
+}
+.userlist{
+    height: 500px;
+    width: 400px;
+    float: left;
+    border:3px solid black;
+    overflow:auto;
+    margin-left:auto;
+}
+.chatWindow{
+    border:3px solid black;
+    height:450px;
     padding:5px;
     overflow:auto;
-	width: 700px;
-	display:block;
-	margin-left: auto;
-	margin-right:auto;
+	width: 600px;
 }
 .sendMessage{
+    border:3px solid black;
     display:flex;
-    justify-content: center
+    justify-content: center;
+    width: 600px;
 }
 .message {
     height:30px;
-    width:600px;
+    width:500px;
     margin-right:10px;
 }
 .sendButton {
@@ -135,14 +156,12 @@ input[type=submit] {
 	height: 8px;
 	float:left;
 }
-.searchUsers {
-    display:flex;
-    justify-content: center
-}
-.usernameSearch {
-    height:30px;
-    width:300px;
-    margin-right:10px;
+.chatusers{
+  width:400px;
+  height: 50px;
+  display: block;
+  margin: 0 auto;
+  background-color: white;
 }
 a.returnButton {
 	text-align: center;
