@@ -22,19 +22,24 @@
 </head>
 <body onload="loadUsers()">
     <div id="banner">
-        <a href=" <?php echo('../' . $_SESSION['username'] . '/' .$_SESSION['username'] . '.php'); ?>"><button id="HomeButton">Home</button></a>
-        <a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>"><button id="SearchButton" type="button">Search</button></a>
         <form method="post">
-            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+          <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
         </form>
-    </div>
-    <h2 id="chatHeader">Chat</h2>
+        <ul id="tabs">
+        <li><a href=" <?php echo('../' . $_SESSION['username'] . '/' .$_SESSION['username'] . '.php'); ?>">Home</a></li>
+        <li><a href="">My Favorites</a></li>
+        <li><a href="">My Recipes</a></li>
+        <li><a href="">Following</a></li>
+        <li><a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>">Search</a></li>
+        </ul>
+    </div><br><br>
     <div class="chatElements">
         <div class="userlist" id="userlist">
-            <h1>Users</h1>
+            <h2>Users</h2>
         </div>
         <div class="chatting">
             <div class="chatWindow" id="chatWindow">
+            <h2 id="chatHeader">Chat</h2>
             </div>
             <div class="sendMessage" id="sendMessage">
                 <textarea class="message" id="message"></textarea>

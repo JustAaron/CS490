@@ -22,8 +22,8 @@ function addUser(username)
     document.getElementById("userlist").innerHTML += messageHTML; //Add the username to the users list
 }
 function getOther(user){
-    i = 0; //Display all the messages from the beginning
-    document.getElementById("chatWindow").innerHTML = ""; //Clear the chat window from the previous user
+    i = 0;
+    document.getElementById("chatWindow").innerHTML = '<h2 id="chatHeader">Chat</h2>';
     other = user; //Each time the user button is clicked, the other user is set to that user
     document.getElementById("chatHeader").innerHTML = other; //Set the chat header to who you're chatting with
 }
@@ -34,7 +34,7 @@ function loadUsers(){
     xhttp.onload = function(){
         if (xhttp.readyState === xhttp.DONE && this.status == 200)
         {
-            res=this.responseText; //Response should be the list of users
+            res=this.responseText;
             if(res.includes('no other users')){
                 console.log("There were no other users");
             }
@@ -45,17 +45,18 @@ function loadUsers(){
             else{
                 res = JSON.parse(res);
                 console.log(res);
-                for(var j = 0; j < res.length; j++) //Each username is in an array
+                for(var j = 0; j < res.length; j++)
                 {
+                    console.log(res[j]);
                     var user = res[j];
-                    addUser(user); //Add each user in the array to the users list
+                    addUser(user);
                 }
             }
         }
     }
-    xhttp.open('GET', '../get_users.php', true); //Get the array of users from get_users.php
+    xhttp.open('GET', '../get_users.php', true);
     xhttp.send(null);
-    updateListen(); //Call update listen to listen for incoming messages in real-time
+    updateListen();
 }
 function updateClient(){
     var message = document.getElementById("message").value; //store the message to a variable

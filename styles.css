@@ -1,27 +1,24 @@
 @charset "utf-8";
 
 body {
-	background-image: linear-gradient(to right, #183397, #AEB3C2);
+	background-image: white;
 }
-.chatpagebody{
-  background-image: white;
-}
-h1,h3 {
+h3 {
 	color:#ffffff;
 	text-align:center;
 	font-family:"Times New Roman", serif;
 	font-size: 50px;
 }
-h2{
+h1, h2{
     color: black;
     display: block;
     padding: 0;
     text-align:center;
 	font-family:"Century Schoolbook", serif;
-	font-size: 50px;
+	font-size: 30px;
 }
 h4,h5,h6,p {
-	color:#ffffff;
+	color: black;
 	text-align:center;
 	font-family:"Helvetica", sans-serif;
 }
@@ -51,51 +48,50 @@ input.password, input.username {
 	padding:1px;
 	margin:5px;
 }
-
+/*For the Banner */
 #banner {
 	margin:auto;
+ height: 80px;
+ border-bottom: 2px solid black;
 }
-#MessageButton {
-	text-align: center;
-	width: 100px;
-	height: 50px;
-	color: blue;
-	float: left;
+#tabs {
+    margin: auto;
+    list-style-type: none;
+    text-align: center;
+    padding: 35px 0 0 0;
+    width: 800px;
+    height: 40px;
+    color: black;
 }
-#HomeButton{
-	text-align: center;
-	width: 100px;
-	height: 50px;
-	color: blue;
-	float: left;
+#banner li{
+    display: inline-block;
+    padding: 0 25px 0 25px;
+    height: 0%;
+    margin: 0 auto;
+    color: black;
 }
-#SearchButton {
-	text-align: center;
-	width: 100px;
-	height: 50px;
-	color: blue;
-	float: left;
+#banner li a{
+    text-decoration: none;
+    font-size: 20px;
+    font-family:"Century Schoolbook", serif;
+    color: black;
 }
 #LogoutButton{
   text-align: center;
 	width: 100px;
 	height: 50px;
-	color: blue;
+	color: black;
 	float: right;
 }
-#NewUserButton{
-	text-align: center;
-	width: 100px;
-	height: 50px;
-	color: blue;
-	float: left;
-}
+/*For the Banner*/
+/*For the Chat*/
 #chatHeader {
     /*background:darkblue;*/
 	text-decoration: underline;
-	text-decoration-color:darkblue;
+	text-decoration-color:black;
 }
 .chatElements{
+    padding-top: 50px;
     width: 1100px;
     height: 500px;
     margin: 0 auto;
@@ -111,6 +107,7 @@ input.password, input.username {
     float: left;
     border:3px solid black;
     overflow:auto;
+    background-color: #D8E7E7;
     margin-left:auto;
 }
 .chatWindow{
@@ -118,7 +115,8 @@ input.password, input.username {
     height:450px;
     padding:5px;
     overflow:auto;
-	width: 600px;
+	  width: 600px;
+    background-color: #D8E7E7;
 }
 .sendMessage{
     border:3px solid black;
@@ -144,12 +142,16 @@ input.password, input.username {
 .myMessage{
 	float:right;
 	background:deepskyblue;
-	padding:5px;
+  border-radius: 15px 0 0 15px;
+  font-weight: bold;
+	padding:10px;
 }
 .othersMessage{
 	float:left;
-	background:gainsboro;
-	padding:5px;
+	background:#FFFFFF;
+  border-radius: 0 15px 15px 0;
+  font-weight: bold;
+	padding:10px;
 }
 .spacing {
 	width: 100%;
@@ -161,8 +163,11 @@ input.password, input.username {
   height: 50px;
   display: block;
   margin: 0 auto;
-  background-color: white;
+  border: none;
+  font-size: 20px;
+  background-color: #D8E7E7;
 }
+/*For the Chat*/
 a.returnButton {
 	text-align: center;
 	color: white;

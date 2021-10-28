@@ -55,16 +55,21 @@ else{
 </head>
 <body onload="loadPosts()">
 	<div id="banner">
-        <a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>"><button id="MessageButton">Messages</button></a>
-        <a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>"><button id="SearchButton" type="button">Search</button></a>
         <form method="post">
             <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
         </form>
+       <ul id="tabs">
+        <li><a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>">Messages</a></li>
+        <li><a href="">My Favorites</a></li>
+        <li><a href="">My Recipes</a></li>
+        <li><a href="">Following</a></li>
+        <li><a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>">Search</a></li>
+        </ul>
     </div><br>
     <div id="pageHeader">
         <h1><?php echo(basename(__FILE__, '.php')); ?></h1>
     </div>
-
+<!--
 	<?php
 		$post_form_html ='
 		<form id="postForm" enctype="multipart/form-data">
@@ -83,6 +88,7 @@ else{
 			echo('<p>You are on another user\'s page</p>');
 		}
 	?>
+	-->
 	<div class="userPosts" id="userPosts"></div>
 	<script
   src="https://code.jquery.com/jquery-3.6.0.min.js"

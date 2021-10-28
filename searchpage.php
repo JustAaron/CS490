@@ -22,11 +22,16 @@
 </head>
 <body>
     <div id="banner">
-        <a href=" <?php echo('../' . $_SESSION['username'] . '/' .$_SESSION['username'] . '.php'); ?>"><button id="HomeButton">Home</button></a>
-        <a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>"><button id="MessageButton">Messages</button></a>
         <form method="post">
             <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
         </form>
+        <ul id="tabs">
+        <li><a href=" <?php echo('../' . $_SESSION['username'] . '/' .$_SESSION['username'] . '.php'); ?>">Home</a></li>
+        <li><a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>">Messages</a></li>
+        <li><a href="">My Favorites</a></li>
+        <li><a href="">My Recipes</a></li>
+        <li><a href="">Following</a></li>
+        </ul>
     </div><br>
     <h1>Search Page</h1>
     <form id="searchOptions">

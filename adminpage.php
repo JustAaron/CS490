@@ -85,10 +85,12 @@ else
 </head>
 <body>
   <div id="banner">
-          <a href="create_new_user.php"><button id="NewUserButton">Create New User</button></a>
-          <form method="post">
-            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
-          </form>
+    <form method="post">
+      <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+    </form>
+    <ul id="tabs">
+      <li><a href="create_new_user.php">Create New User</a></li>
+    </ul>
   </div>
   <h1>List of Posts</h1>
   <?php print $display ?>

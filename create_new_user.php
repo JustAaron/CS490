@@ -17,6 +17,7 @@
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	ini_set('display_errors', 1);
 	require("account.php");
+
 	$conn = mysqli_connect($hostname, $username, $password, $project);
 	if (mysqli_connect_errno())
 	{
@@ -93,11 +94,13 @@
 		<title>Create User Page</title>
 	</head>
 	<div id="banner">
-        	<a href="adminpage.php"><button id="NewUserButton">Home</button></a>
-          	<form method="post">
-            		<input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
-        	</form>
-  	</div>
+		<form method="post">
+            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+        </form>
+		<ul id="tabs">
+          <li><a href="adminpage.php">Home</a></li>
+		</ul>
+  </div>
 	<div id="pageHeader">
 		<h1>Create a New User</h1>
 	</div>
