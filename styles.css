@@ -48,7 +48,7 @@ input.password, input.username {
 	padding:1px;
 	margin:5px;
 }
-/*For the Banner */
+/* vFor the Bannerv */
 #banner {
 	margin:auto;
  height: 80px;
@@ -83,8 +83,8 @@ input.password, input.username {
 	color: black;
 	float: right;
 }
-/*For the Banner*/
-/*For the Chat*/
+/* ^For the Banner^ */
+/* vFor the Chatv */
 #chatHeader {
     /*background:darkblue;*/
 	text-decoration: underline;
@@ -167,17 +167,18 @@ input.password, input.username {
   font-size: 20px;
   background-color: #D8E7E7;
 }
-/*For the Chat*/
+/* ^For the Chat^ */
 a.returnButton {
 	text-align: center;
 	color: white;
 	display:block;
 	margin: 0 auto;
 }
+/* vFor the Search Pagev */
 #searchOptions {
 	text-align:center;
 	padding:10px;
-	width: 600px;
+	width: 700px;
 	border-radius: 50px;
 	border: 5px solid grey;
 	padding: 40px;
@@ -187,16 +188,31 @@ a.returnButton {
 }
 #radioButtons{
 	display: block;
-	text-align: right;
-	margin-left: 60%;
+	width: 300px;
+	text-align: center;
+	margin-left: 220px;;
 	padding-bottom: 10px;
 }
-#search{
+.search{
 	display: block;
-	margin-left: 30%
+  padding-top: 20px;
+  margin-left: 45%
 }
-#searchField{
+.searchField{
 	width: 300px;
+}
+label[for=title], label[for=ingredients], label[for=tagSelect], label[for=searchField] {
+    display: inline-block;
+    width:75px;
+    text-align: right;
+}
+.tagSelect{
+  width: 310px;
+  margin-left: 20%;
+}
+.searchB{
+  margin-left: 150px;
+  width: 100px;
 }
 #results{
 	padding-top: 50px;
@@ -219,6 +235,7 @@ a.returnButton {
 	display:block;
   	height: 10px;
 }
+/* ^For the Search Page^ */
 .postComments{
 	width:900px;
 	border:5px solid black;
