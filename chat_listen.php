@@ -10,6 +10,8 @@
 	Example: [{"isIncoming":true,"Message":"test message from 1 to 0"},{"isIncoming":false,"Message":"test message from 0 to 1"}] 
 	If the other is valid but there are 0 messages between client and other: echo "no messages found"
 	If the other is not valid: echo "user not found"
+	
+	Update 11/3/21: Mark messages as read if the message receiver is the logged-in user
 	*/
 	session_start();
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
@@ -21,40 +23,62 @@
 		exit();
 	}
 	
-	function main(){
+	function usernameToUid($username){
 		global $conn;
-		$send_query = 'SELECT * FROM alpha_users WHERE username=\'' . $_SESSION['username'] . '\';';
-		$rec_query = 'SELECT * FROM alpha_users WHERE username=\'' . $_POST['other'] . '\';';
-		$send_result = mysqli_query($conn, $send_query);
-		$rec_result = mysqli_query($conn, $rec_query);
-		if($send_result && $rec_result && mysqli_num_rows($send_result) > 0 && mysqli_num_rows($rec_result) > 0){
-			$send_row = mysqli_fetch_assoc($send_result);
-			$rec_row = mysqli_fetch_assoc($rec_result);
-			$send_uid =  $send_row['uid'];
-			$rec_uid = $rec_row['uid'];
-			$message_query = 'SELECT * FROM ChatMessages WHERE (SenderID="' . $send_uid . '" AND ReceiverID="' . $rec_uid . '") OR (SenderID="' . $rec_uid . '" AND ReceiverID="' . $send_uid . '") ORDER BY MessageID ASC;';
-			$message_result = mysqli_query($conn, $message_query);
-			if($message_result && mysqli_num_rows($message_result) > 0){
-				$a = array();
-				while($row = mysqli_fetch_assoc($message_result)){
-					if($send_uid == $row['SenderID']){
-						array_push($a, array('isIncoming'=>False, 'Message'=>$row['Message']));
-					}
-					else{
-						array_push($a, array('isIncoming'=>True, 'Message'=>$row['Message']));
-					}
+		$query = 'SELECT * FROM alpha_users WHERE username="' . $username . '";';
+		$result = mysqli_query($conn, $query);
+		if($result && mysqli_num_rows($result) == 1){
+			$row = mysqli_fetch_assoc($result);
+			$uid = $row['uid'];
+			return $uid;
+		}
+		return -1;  // error value
+	}
+	
+	function markAsReadDatabase($sender_uid, $receiver_uid){
+		global $conn;
+		$query = 'UPDATE ChatMessages SET isRead=0 WHERE SenderID="' . $receiver_uid . '" AND ReceiverID="' . $sender_uid . '";';
+		$result = mysqli_query($conn, $query);
+		if($result){
+			return 0;
+		}
+		return -1;  // error value
+		
+	}
+	
+	function getMessagesDatabase($sender_uid, $receiver_uid){
+		global $conn;
+		$query = 'SELECT * FROM ChatMessages WHERE (SenderID="' . $sender_uid . '" AND ReceiverID="' . $receiver_uid . '") OR (SenderID="' . $receiver_uid . '" AND ReceiverID="' . $sender_uid . '") ORDER BY MessageID ASC;';
+		$result = mysqli_query($conn, $query);
+		if($result && mysqli_num_rows($result) > 0){
+			$messages = array();
+			while($row = mysqli_fetch_assoc($result)){
+				if($sender_uid == $row['SenderID']){
+					array_push($messages, array('isIncoming'=>False, 'Message'=>$row['Message']));
 				}
-				$str = json_encode($a);
-				echo($str);
+				else{
+					array_push($messages, array('isIncoming'=>True, 'Message'=>$row['Message']));
+				}
 			}
-			else{
-				echo('no messsages found');
-			}
-			mysqli_free_result($send_result);
-			mysqli_free_result($rec_result);
+			$str = json_encode($messages);
+			echo($str);
 		}
 		else{
+			echo('no messsages found');
+		}
+		return 0;
+	}
+	
+	function main(){
+		$sender_uid = $_SESSION['uid'];
+		$receiver_username = $_POST['other'];
+		$receiver_uid = usernameToUid($receiver_username);
+		if($receiver_uid == -1){
 			echo('user not found');
+			return -1;
+		}
+		if(getMessagesDatabase($sender_uid, $receiver_uid) == 0){
+			markAsReadDatabase($sender_uid, $receiver_uid);
 		}
 	}
 	main();
