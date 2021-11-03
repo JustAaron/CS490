@@ -1,4 +1,15 @@
 <?php
+	/*
+	Functionality: Enables users to cancel a sent follow (by deleting the entry from the Follows table)
+	Input:
+	In $_SESSION[], "uid" should be the uid of the logged-in user
+	In $_POST[], "other" should be the username of the user to no longer be followed
+	Output:
+	If the row was successfully deleted: echo "successfully unfollowed"
+	If the "other" user was not found: echo "user not found"
+	If there was a database error: echo "database error"
+	*/
+	
 	session_start();
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	ini_set('display_errors', 1);
@@ -35,7 +46,16 @@
 		$client_uid = $_SESSION['uid'];
 		$other_username = $_POST['other'];
 		$other_uid = usernameToUid($other_username);
-		deleteDatabase($client_uid, $other_uid);
+		if($other_uid == -1){
+			echo('user not found');
+			return;
+		}
+		if(deleteDatabase($client_uid, $other_uid) == 0){
+			echo('successfully unfollowed');
+		}
+		else{
+			echo('database error');
+		}
 	}
 	main();
 	mysqli_close($conn);

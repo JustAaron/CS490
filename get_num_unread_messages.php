@@ -1,4 +1,14 @@
 <?php
+	/*
+	Functionality: Gets the number of urnead messages between the logged-in user and another user
+	Input:
+	In $_SESSION[], "uid" should be the uid of the logged-in user
+	In $_POST[], "other" should be the username of another user (probably a friend that has a chat history)
+	Output:
+	If the count was successfully queried: echo the count of the unread messages (int)
+	If there was a database error: echo "database error"
+	*/
+	
 	session_start();
 	error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 	ini_set('display_errors', 1);
@@ -34,6 +44,7 @@
 			echo($count);
 			return 0;
 		}
+		echo('database error');
 		return -1;  // error value
 	}
 	
