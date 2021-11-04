@@ -18,36 +18,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat</title>
+    <title>My Recipes</title>
 </head>
-<body onload="loadUsers()">
+<body>
     <div id="banner">
         <form method="post">
-          <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
         </form>
         <ul id="tabs">
         <li><a href=" <?php echo('../' . $_SESSION['username'] . '/' .$_SESSION['username'] . '.php'); ?>">Home</a></li>
-        <li><a href="<?php echo('../' . $_SESSION['username'] . '/myrecipepage.php'); ?>">My Recipes</a></li>
+        <li><a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>">Messages</a></li>
+        <li><a href="<?php echo('../' . $_SESSION['username'] . '/favoritespage.php'); ?>">My Favorites</a></li>
         <li><a href="<?php echo('../' . $_SESSION['username'] . '/followingpage.php'); ?>">Following</a></li>
-		<li><a href="<?php echo('../' . $_SESSION['username'] . '/friendspage.php'); ?>">Friends</a></li>
         <li><a href="<?php echo('../' . $_SESSION['username'] . '/friendspage.php'); ?>">Friends</a></li>
         <li><a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>">Search</a></li>
         </ul>
-    </div><br><br>
-    <div class="chatElements">
-        <div class="userlist" id="userlist">
-            <h2>Users</h2>
-        </div>
-        <div class="chatting">
-            <div class="chatWindow" id="chatWindow">
-            <h2 id="chatHeader">Chat</h2>
-            </div>
-            <div class="sendMessage" id="sendMessage">
-                <textarea class="message" id="message"></textarea>
-                <button class="sendButton" id="sendButton">Send</button>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript" src="../chat.js"></script>
+    </div><br>
+    <h1>My Recipes</h1>
 </body>
 </html>

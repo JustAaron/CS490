@@ -275,3 +275,35 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 	width: 400px;
 	margin: 0 auto;
 }
+/*vFor the Chatv*/
+.tabs {
+	text-align:center;
+	padding:10px;
+	width: 700px;
+	border-radius: 50px;
+	border: 5px solid grey;
+	padding: 40px;
+	margin: 0 auto;
+	background-color:#E6E0E0;
+	display:block;
+}
+/*.tabOptions{
+
+}*/
+.selection{
+  display: inline-block;
+  font-size: 25px;
+  width: 220px;
+  height: 50px;
+  border-width: 4px;
+  background: #E6E0E0;
+}
+.selection-active{
+  border-bottom: none;
+}
+.tabContent{
+  display:none;
+}
+.tab-active{
+  display:block;
+}
