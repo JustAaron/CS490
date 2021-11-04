@@ -1,6 +1,6 @@
 <?php
 	/*
-	Functionality: Reject friend request by setting the isActive attribute to 0
+	Functionality: Reject friend request by deleting the appropriate row
 	Input:
 	In $_SESSION[], "uid" should be the uid of the logged-in user
 	In $_POST[], "other" should be the username of the rejected user
@@ -8,6 +8,9 @@
 	If the query was successful: echo "successfully rejected"
 	If the "other" was not found: echo "user not found"
 	If there was a database error: echo "database error"
+	
+	Last updated 11/4/21
+	Changed updating isActive field to deletion of the row
 	*/
 	
 	session_start();
@@ -31,7 +34,7 @@
 		return -1;  // error value
 	}
 	
-	/*function deleteDatabase(){
+	function deleteDatabase(){
 		global $conn;
 		$rejecter_uid = $_SESSION['uid'];
 		$rejected_username = $_POST['other'];
@@ -46,28 +49,10 @@
 			return;
 		}
 		echo('successfully rejected');
-	}*/
-	
-	function updateDatabase(){
-		global $conn;
-		$rejecter_uid = $_SESSION['uid'];
-		$rejected_username = $_POST['other'];
-		$rejected_uid = getUserID($rejected_username);
-		if($rejected_uid == -1){
-			echo('user not found');
-		}
-		$query = 'UPDATE FriendRequests SET isActive=0 WHERE ReceiverID=' . $rejecter_uid . ' AND SenderID=' . $rejected_uid . ';';
-		$result = mysqli_query($conn, $query);
-		if(!$result){
-			echo('database error');
-			return;
-		}
-		echo('successfully rejected');
 	}
 	
 	function main(){
-		//deleteDatabase();
-		updateDatabase();
+		deleteDatabase();
 	}
 	main();
 	mysqli_close($conn);
