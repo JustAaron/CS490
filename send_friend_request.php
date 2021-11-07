@@ -22,7 +22,7 @@
 
 	function getMaxRequestID(){
 		global $conn;
-		$query = 'SELECT MAX(RequestID) as max_rid FROM FriendRequests;';
+		$query = 'SELECT MAX(FriendRequestID) as max_rid FROM FriendRequests;';
 		$result = mysqli_query($conn, $query);
 		if($result && mysqli_num_rows($result) == 1){
 			$row = mysqli_fetch_assoc($result);
@@ -54,7 +54,7 @@
 		if($receiver_id == -1){
 			echo('user not found');
 		}
-		$query = 'INSERT INTO FriendRequests (RequestID, SenderID, ReceiverID) VALUES (' . $max_request_id . ', ' . $sender_id . ', ' . $receiver_id . ');';
+		$query = 'INSERT INTO FriendRequests (FriendRequestID, SenderID, ReceiverID) VALUES (' . $max_request_id . ', ' . $sender_id . ', ' . $receiver_id . ');';
 		$result = mysqli_query($conn, $query);
 		if(!$result){
 			echo('database error');
