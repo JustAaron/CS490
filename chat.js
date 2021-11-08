@@ -27,35 +27,36 @@ function getOther(user){
     other = user; //Each time the user button is clicked, the other user is set to that user
     document.getElementById("chatHeader").innerHTML = other; //Set the chat header to who you're chatting with
 }
-
-function loadUsers(){
+function getFriends()
+{
     var xhttp = new XMLHttpRequest();
-    var res = "";
-    xhttp.onload = function(){
-        if (xhttp.readyState === xhttp.DONE && this.status == 200)
+    xhttp.onload = function(){ //Runs everytime a response returns after send()
+        if(this.readyState == 4 && this.status == 200)
         {
             res=this.responseText;
-            if(res.includes('no other users')){
-                console.log("There were no other users");
-            }
-            else if(res.includes('database error'))
+            console.log(res);
+            if(res.includes('database error'))
             {
-                alert("Error: Database");
+                console.log("Friends Database error");
             }
-            else{
+            else if(!res)
+            {
+                console.log("Not Friends");
+            }
+            else
+            {
                 res = JSON.parse(res);
-                console.log(res);
-                for(var j = 0; j < res.length; j++)
+                for (var i = 0; i < res.length;i++)
                 {
-                    console.log(res[j]);
-                    var user = res[j];
+                    var user = res[i];
                     addUser(user);
                 }
             }
         }
     }
-    xhttp.open('GET', '../get_users.php', true);
-    xhttp.send(null);
+    xhttp.open("GET", "../get_friends.php", true); 
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
     updateListen();
 }
 function updateClient(){
@@ -99,16 +100,15 @@ function updateListen(){
         if (xhttp.readyState === xhttp.DONE && this.status == 200)
         {
             res = this.responseText;    //response from chat_listen
-            console.log(res);
             if(res.includes('user not found')) //username in the text field is not a valid user
             {
                 console.log("user not found");  //Clear the chat window and reset the chat header, and reset the index
                 document.getElementById("chatHeader").innerHTML = "Chat";
                 i = 0;
             }
-            else if(res.includes("no messages found"))
+            else if(res.includes("no messsages found"))
             {
-                console.log("no messages found");
+                console.log("no messages");
             }
 			else if(res.includes("error while getting max_message_id"))
 			{
@@ -119,7 +119,6 @@ function updateListen(){
 			}
             else
             {
-                console.log(res);
                 res = JSON.parse(res);  //returns an array of existing messages
                 for (i;i<res.length;i++) //go through each item in the array
                 {
