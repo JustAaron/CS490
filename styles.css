@@ -59,7 +59,7 @@ input.password, input.username {
     list-style-type: none;
     text-align: center;
     padding: 35px 0 0 0;
-    width: 800px;
+    width: 900px;
     height: 40px;
     color: black;
 }
@@ -306,4 +306,79 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 }
 .tab-active{
   display:block;
+}
+.otherUserOptions{
+  display: block;
+  margin: 0 auto;
+  width: 500px;
+
+}
+.otherUserButton{
+    height: 30px;
+    width: 248px;
+}
+#follow{
+	border-radius: 5px;
+	background-color: #84bde1;
+	color: white;
+	font-size: 20px;
+}
+#addFriend{
+	border-radius: 5px;
+	background-color: #84bde1;
+	color: white;
+	font-size: 20px;
+}
+.friendRequest{
+	font-size: 25px;
+	font-family:"Century Schoolbook", serif;
+	font-weight: bold;
+	padding: 5px;
+}
+.acceptFriend{
+	float: right;
+	margin-right: 15px;
+	width: 60px;
+	font-weight: 1000;
+	font-size: 20px;
+	text-align:center;
+	height: 30px;
+	color: green;
+}
+.declineFriend{
+	float: right;
+	width: 60px;
+	height: 30px;
+	font-size: 15px;
+	margin-right: 180px;
+}
+.followingUser{
+  font-size: 25px;
+	font-family:"Century Schoolbook", serif;
+	font-weight: bold;
+	padding: 5px;
+}
+.unfollowButton{
+	float: right;
+	width: 120px;
+	height: 30px;
+	font-size: 20px;
+	margin-right: 180px;
+}
+.unfollowSymbol{
+  color: red;
+  font-size: 20px;
+}
+.friendList{
+  font-size: 25px;
+	font-family:"Century Schoolbook", serif;
+	font-weight: bold;
+	padding: 5px;
+}
+.unfriendButton{
+	float: right;
+	width: 190px;
+	height: 30px;
+	font-size: 20px;
+	margin-right: 110px;
 }

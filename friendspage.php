@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friends</title>
 </head>
-<body>
+<body onload="getContent()">
     <div id="banner">
         <form method="post">
             <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
@@ -42,15 +42,12 @@
         </div>
         <div class="tabContent" id="friendsTab" data-tab="1">
         <h1>Friends</h1>
-        These are your friends
         </div>
         <div class="tabContent" id="friendRequestTab" data-tab="2">
         <h1>Active Friend Requests</h1>
-        There are your pending friend requests
         </div>
         <div class="tabContent" id="followingTab" data-tab="3">
         <h1>Following</h1>
-        These are the people you follow
         </div>
     </div>
     <script type="text/javascript" src="../friends.js"></script>
