@@ -77,6 +77,7 @@
 		
 		copy('searchpage.php', $username . '/searchpage.php');
 		echo("<br><p>Successfully created search page.</p>");
+		copy('friendspage.php', $username . '/friendspage.php');
 	}
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
