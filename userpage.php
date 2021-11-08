@@ -53,7 +53,7 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo(basename(__FILE__, '.php')); ?></title>
 </head>
-<body onload="loadPosts()">
+<body onload="loadPage()">
 	<div id="banner">
         <form method="post">
             <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
@@ -70,7 +70,11 @@ else{
     <div id="pageHeader">
         <h1><?php echo(basename(__FILE__, '.php')); ?></h1>
     </div>
-<!--
+    <!--
+    <div class="otherUserOptions">
+        <button class="otherUserButton" id="addFriend">Add Friend</button>
+        <button class="otherUserButton" id="follow">+Follow</button>
+    </div>-->
 	<?php
 		$post_form_html ='
 		<form id="postForm" enctype="multipart/form-data">
@@ -83,13 +87,15 @@ else{
 			  <p><input type="submit" value="Submit"></p>
 		</form>';
 		if(!$isOther){
-			echo($post_form_html);
+			//echo($post_form_html);
 		}
 		else{
-			echo('<p>You are on another user\'s page</p>');
+			echo('<div class="otherUserOptions" id="otherUserOptions">
+        <button class="otherUserButton" id="addFriend" onclick="sendFriendRequest();">Add Friend</button>
+        <button class="otherUserButton" id="follow" onclick="followUser();">+Follow</button>
+    </div>');
 		}
 	?>
-	-->
 	<div class="userPosts" id="userPosts"></div>
 	<script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
