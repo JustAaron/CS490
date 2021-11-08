@@ -26,6 +26,7 @@ function checkFollow() //Check if the user already follows or not
 }
 function isFriends()
 {
+    var isFriend = 0;
     var xhttp = new XMLHttpRequest();
     xhttp.onload = function(){ //Runs everytime a response returns after send()
         if(this.readyState == 4 && this.status == 200)
@@ -49,10 +50,18 @@ function isFriends()
                 {
                     if(res[i] == other)
                     {
-                        return true;
+                        isFriend = 1;
                     }
                 }
-                return false;
+                
+            }
+            if(isFriend == 1)
+            {
+                document.getElementById("addFriend").innerHTML = 'Remove Friend';
+            }
+            else
+            {
+                document.getElementById("addFriend").innerHTML = 'Add Friend';
             }
         }
     }
@@ -71,14 +80,7 @@ function checkFriend() //Check if the user is already friends with another user
             console.log(res);
             if(res.includes("false")) //If the user is already friends, give the option to remove the friend.
             {
-                if(isFriends())
-                {
-                    document.getElementById("addFriend").innerHTML = 'Remove Friend';
-                }
-                else
-                {
-                    document.getElementById("addFriend").innerHTML = 'Add Friend';
-                }
+                  isFriends()
             }
             else if(res.includes("true")) //If a friend request is pending, give the option to cancel the request
             {
