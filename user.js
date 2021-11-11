@@ -19,7 +19,7 @@ function checkFollow() //Check if the user already follows or not
             }
         }
     }
-    xhttp.open("POST", "../has_user_followed.php", true); 
+    xhttp.open("POST", "../has_user_followed.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var sendString = 'other=' + other;
     xhttp.send(sendString);
@@ -53,7 +53,7 @@ function isFriends()
                         isFriend = 1;
                     }
                 }
-                
+
             }
             if(isFriend == 1)
             {
@@ -65,7 +65,7 @@ function isFriends()
             }
         }
     }
-    xhttp.open("GET", "../get_friends.php", true); 
+    xhttp.open("GET", "../get_friends.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -88,7 +88,7 @@ function checkFriend() //Check if the user is already friends with another user
             }
         }
     }
-    xhttp.open("POST", "../has_user_friend_requests.php", true); 
+    xhttp.open("POST", "../has_user_friend_requests.php", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var sendString = 'other=' + other;
     xhttp.send(sendString);

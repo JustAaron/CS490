@@ -53,6 +53,7 @@
         </table>
     </form>
     <div id=results></div>
+    <a href="spoonacular_recipe.php" id="SpoonRecipe"></a>
     <script type="text/javascript" src="../search.js"></script>
 
 </body>
