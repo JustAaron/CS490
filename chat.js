@@ -17,8 +17,12 @@ function displayIncomingMessage(message)
 }
 function addUser(username)
 {
-    var messageHTML = '<input type=submit name="' + username + '" value="' + username +
-     '" class="chatusers" onclick="getOther(this.value)"><br>'; //Format each user
+    var messageHTML = '<div class="userChatNoti" id="chat' + username + '"><button class="chatusers" value="' + username + '"onclick="getOther(this.value)">' + username + '</button></div><br>'; //Format each user
+    document.getElementById("userlist").innerHTML += messageHTML; //Add the username to the users list
+}
+function addUserWithUnread(username, unread)
+{
+    var messageHTML = '<div class="userChatNoti" id="chat' + username + '"><button class="chatusers" value="' + username + '"onclick="getOther(this.value)">' + username + '<span class="chatNoti" id="unread' + username + '">' + unread + '</span></button></div><br>'; //Format each user
     document.getElementById("userlist").innerHTML += messageHTML; //Add the username to the users list
 }
 function getOther(user){
@@ -26,9 +30,16 @@ function getOther(user){
     document.getElementById("chatWindow").innerHTML = '<h2 id="chatHeader">Chat</h2>';
     other = user; //Each time the user button is clicked, the other user is set to that user
     document.getElementById("chatHeader").innerHTML = other; //Set the chat header to who you're chatting with
+    var unreadID = "unread" + user;
+    var messageNoti = document.getElementById(unreadID);
+    if(messageNoti != null)
+    {
+        messageNoti.parentNode.removeChild(messageNoti);
+    }
 }
 function getFriends()
 {
+    loadRequestNotifications();
     var xhttp = new XMLHttpRequest();
     xhttp.onload = function(){ //Runs everytime a response returns after send()
         if(this.readyState == 4 && this.status == 200)
@@ -49,7 +60,7 @@ function getFriends()
                 for (var i = 0; i < res.length;i++)
                 {
                     var user = res[i];
-                    addUser(user);
+                    getNumUnread(user);
                 }
             }
         }
@@ -58,6 +69,64 @@ function getFriends()
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
     updateListen();
+}
+function loadRequestNotifications(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){ //Runs everytime a response returns after send()
+        if(this.readyState == 4 && this.status == 200)
+        {
+            res=this.responseText;
+            if(res.includes("true")) //User has pending friend requests
+            {
+                var friendsNoti = document.getElementById("friendsNoti");
+                if(friendsNoti == null)
+                {
+                    document.getElementById("friendsPage").innerHTML += '<span class="noti" id="friendsNoti"></span>'
+                }
+            }
+            else
+            {
+                var friendsNoti = document.getElementById("friendsNoti");
+                if(friendsNoti != null)
+                {
+                    friendsNoti.parentNode.removeChild(friendsNoti);
+                }
+            }
+        }
+    }
+    xhttp.open("GET", "../has_friend_requests.php", true); 
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+}
+function getNumUnread(username)
+{
+      var xhttp = new XMLHttpRequest();
+        xhttp.onload = function(){ //Runs everytime a response returns after send()
+          if(this.readyState == 4 && this.status == 200)
+          {
+              res=this.responseText;
+              if(res.includes("database error"))
+              {
+                  alert("Error: Database");
+              }
+              else
+              {
+                  var unread = parseInt(res);
+                  if(unread == 0)
+                  {
+                      addUser(username);
+                  }
+                  else
+                  {
+                      addUserWithUnread(username, unread);
+                  }
+              }
+        }
+      }
+        xhttp.open("POST", "../get_num_unread_messages.php", true); 
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var sendString = 'other=' + username;
+        xhttp.send(sendString);
 }
 function updateClient(){
     var message = document.getElementById("message").value; //store the message to a variable

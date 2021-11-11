@@ -55,7 +55,7 @@ function getForm(radio) //Display a different form for each selected option
     {
       clearForm();
       console.log("You are searching for a spoonacular recipe");
-      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" name="searchField" class="searchField"></td></tr><tr class="search"><td><label for="ingredients">Ingredients:</label></td><td>                             <input type="text" id="ingredients" name="ingredients" class="searchField"></td></tr><tr class="search"><td><label for="tagSelect">Tags:</label</td><td><select id="tagSelect" name="tagSelect[]" class="tagSelect" multiple><option value="Vegan">Vegan</option     ><option value="Vegetarian">Vegetarian</option><option value="Breakfast">Breakfast</option><option value="Lunch">Lunch</option><option value="Dinner">Dinner</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
+      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" class="searchField"></td></tr><tr class="search"><t<td><label for="tagSelect">Tags:</label</td><td><select id="tagSelect" class="tagSelect" multiple=""><option>Vegan</option                         ><option>Vegetarian</option><option>Breakfast</option><option>Lunch</option><option>Dinner</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
       document.getElementById("searchElements").innerHTML += searchHTML;
       $('#tagSelect').chosen();
     }
@@ -67,6 +67,99 @@ function getForm(radio) //Display a different form for each selected option
       document.getElementById("searchElements").innerHTML += searchHTML;
       $('#tagSelect').chosen();
     }
+}
+function loadElements()
+{
+    loadRequestNotifications();
+    getFriends();
+}
+function loadChatNotifications(friends){
+    for (var i = 0; i < friends.length; i++)
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onload = function(){ //Runs everytime a response returns after send()
+          if(this.readyState == 4 && this.status == 200)
+          {
+              res=this.responseText;
+              if(res.includes("database error"))
+              {
+                  alert("Error: Database");
+              }
+              else
+              {
+                  if(parseInt(res) > 0 && document.getElementById("friendNoti") == null)
+                  {
+                      document.getElementById("messagesPage").innerHTML += '<span class="noti" id="chatNoti"></span>';
+                  }
+              }
+        }
+      }
+        other = friends[i];
+        xhttp.open("POST", "../get_num_unread_messages.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var sendString = 'other=' + other;
+        xhttp.send(sendString);
+    }
+
+}
+function getFriends()
+{
+    var friendsList = [];
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){ //Runs everytime a response returns after send()
+        if(this.readyState == 4 && this.status == 200)
+        {
+            res=this.responseText;
+            if(res.includes('database error'))
+            {
+                console.log("Friends Database error");
+            }
+            else if(!res)
+            {
+                console.log("No friends");
+                return null;
+            }
+            else
+            {
+                res = JSON.parse(res);
+                for (var i = 0; i < res.length;i++)
+                {
+                    friendsList.push(res[i]);
+                }
+                loadChatNotifications(friendsList);
+            }
+        }
+    }
+    xhttp.open("GET", "../get_friends.php", true);
+    xhttp.send();
+}
+function loadRequestNotifications(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){ //Runs everytime a response returns after send()
+        if(this.readyState == 4 && this.status == 200)
+        {
+            res=this.responseText;
+            if(res.includes("true")) //User has pending friend requests
+            {
+                var friendsNoti = document.getElementById("friendsNoti");
+                if(friendsNoti == null)
+                {
+                    document.getElementById("friendsPage").innerHTML += '<span class="noti" id="friendsNoti"></span>'
+                }
+            }
+            else
+            {
+                var friendsNoti = document.getElementById("friendsNoti");
+                if(friendsNoti != null)
+                {
+                    friendsNoti.parentNode.removeChild(friendsNoti);
+                }
+            }
+        }
+    }
+    xhttp.open("GET", "../has_friend_requests.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
 }
 var searchForm = document.getElementById('searchOptions');
 
