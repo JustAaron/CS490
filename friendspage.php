@@ -27,7 +27,7 @@
         </form>
         <ul id="tabs">
         <li><a href=" <?php echo('../' . $_SESSION['username'] . '/' .$_SESSION['username'] . '.php'); ?>">Home</a></li>
-        <li><a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>">Messages</a></li>
+        <li id="messagesPage"><a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>">Messages</a></li>
         <li><a href="<?php echo('../' . $_SESSION['username'] . '/favoritespage.php'); ?>">My Favorites</a></li>
         <li><a href="<?php echo('../' . $_SESSION['username'] . '/myrecipepage.php'); ?>">My Recipes</a></li>
         <li><a href="<?php echo('../' . $_SESSION['username'] . '/followingpage.php'); ?>">Following</a></li>
@@ -37,7 +37,7 @@
     <div class="tabs">
         <div class="tabOptions">
             <button class="selection" data-for-tab="1">Friends</button>
-            <button class="selection" data-for-tab="2">Friend Requests</button>
+            <button class="selection" data-for-tab="2" id="requestNotiTab">Friend Requests</button>
             <button class="selection" data-for-tab="3">Following</button>
         </div>
         <div class="tabContent" id="friendsTab" data-tab="1">

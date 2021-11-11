@@ -27,6 +27,96 @@ function getContent()
     getFriends();
     getFriendRequests();
     getFollowing();
+    loadRequestNotifications();
+    getFriendsNotifications();
+}
+function loadChatNotifications(friends){
+    for (var i = 0; i < friends.length; i++)
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onload = function(){ //Runs everytime a response returns after send()
+          if(this.readyState == 4 && this.status == 200)
+          {
+              res=this.responseText;
+              if(res.includes("database error"))
+              {
+                  alert("Error: Database");
+              }
+              else
+              {
+                  if(parseInt(res) > 0 && document.getElementById("friendNoti") == null)
+                  {
+                      document.getElementById("messagesPage").innerHTML += '<span class="noti" id="chatNoti"></span>';
+                  }
+              }
+        }
+      }
+        other = friends[i];
+        xhttp.open("POST", "../get_num_unread_messages.php", true); 
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var sendString = 'other=' + other;
+        xhttp.send(sendString);
+    }
+    
+}
+function getFriendsNotifications()
+{
+    var friendsList = [];
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){ //Runs everytime a response returns after send()
+        if(this.readyState == 4 && this.status == 200)
+        {
+            res=this.responseText;
+            if(res.includes('database error'))
+            {
+                console.log("Friends Database error");
+            }
+            else if(!res)
+            {
+                console.log("No friends");
+                return null;
+            }
+            else
+            {
+                res = JSON.parse(res);
+                for (var i = 0; i < res.length;i++)
+                {
+                    friendsList.push(res[i]);
+                }
+                loadChatNotifications(friendsList);
+            }
+        }
+    }
+    xhttp.open("GET", "../get_friends.php", true); 
+    xhttp.send();
+}
+function loadRequestNotifications(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){ //Runs everytime a response returns after send()
+        if(this.readyState == 4 && this.status == 200)
+        {
+            res=this.responseText;
+            if(res.includes("true")) //User has pending friend requests
+            {
+                var friendsNoti = document.getElementById("requestNoti");
+                if(friendsNoti == null)
+                {
+                    document.getElementById("requestNotiTab").innerHTML += '<span class="noti" id="requestNoti"></span>'
+                }
+            }
+            else
+            {
+                var friendsNoti = document.getElementById("requestNoti");
+                if(friendsNoti != null)
+                {
+                    friendsNoti.parentNode.removeChild(friendsNoti);
+                }
+            }
+        }
+    }
+    xhttp.open("GET", "../has_friend_requests.php", true); 
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
 }
 function getFriends()
 {
@@ -240,13 +330,13 @@ function friendDecline(requestor)
             {
                  console.log("Database error");
             }
-            else if(res.includes("successfully cancelled")) //If the user doesn't follow this user, display the follow button
+            else if(res.includes("successfully rejected")) //If the user doesn't follow this user, display the follow button
             {
                 console.log("Successfully declined friend request");
             }
         }
     }
-    xhttp.open("POST", "../cancel_friend_request.php", true); 
+    xhttp.open("POST", "../reject_friend_request.php", true); 
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var sendString = 'other=' + requestor;
     xhttp.send(sendString);

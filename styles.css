@@ -159,13 +159,25 @@ input.password, input.username {
 	float:left;
 }
 .chatusers{
-  width:400px;
+  width:200px;
   height: 50px;
-  display: block;
-  margin: 0 auto;
+  margin-left: 100px;
   border: none;
   font-size: 20px;
   background-color: #D8E7E7;
+}
+.chatNoti{
+  height: 15px;
+  width: 25px;
+  position: absolute;
+  margin-left: 10px;
+  background-color: red;
+  border-radius: 60%;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
 }
 /* ^For the Chat^ */
 a.returnButton {
@@ -381,4 +393,13 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 	height: 30px;
 	font-size: 20px;
 	margin-right: 110px;
+}
+.noti {
+  height: 8px;
+  width: 8px;
+  margin-left: 3px;
+  position: absolute;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
 }
