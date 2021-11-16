@@ -21,6 +21,38 @@
     <title>Recipe</title>
 </head>
 <body>
-    PLACEHOLDER
+    <div id="banner">
+        <form method="post">
+            <label for="LogoutButton">Welcome, <?php echo $_SESSION['username']?></label>
+            <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
+        </form>
+        <ul id="tabs">
+        <li><a href=" <?php echo('../' . $_SESSION['username'] . '/' .$_SESSION['username'] . '.php'); ?>">Home</a></li>
+        <li id="messagesPage"><a href=" <?php echo('../' . $_SESSION['username'] . '/chatpage.php'); ?>">Messages</a></li>
+        <li><a href="<?php echo('../' . $_SESSION['username'] . '/favoritespage.php'); ?>">My Favorites</a></li>
+        <li><a href="<?php echo('../' . $_SESSION['username'] . '/myrecipepage.php'); ?>">My Recipes</a></li>
+        <li><a href="<?php echo('../' . $_SESSION['username'] . '/followingpage.php'); ?>">Following</a></li>
+        <li id="friendsPage"><a href="<?php echo('../' . $_SESSION['username'] . '/friendspage.php'); ?>">Friends</a></li>
+        <li><a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>">Search</a></li>
+        </ul>
+    </div>
+    <div id="recipeTitle">
+    </div>
+    <div id="recipePicture">
+    </div>
+    <div id="recipeContent">
+        <div id="userRecipeIngredients">
+            <p class="recipeContentTitle">Ingredients</p>
+        </div>
+        <div id="userRecipeSteps">
+            <p class="recipeContentTitle">Steps</p>
+        </div>
+    </div>
+    <div id="recipeButtonTab">
+        <button class="addToFavoriteButton">&#9734;Add to Favorites</button>
+    </div>
+    <div id="recipeComments">
+        <p class="recipeContentTitle">Comments</p>
+    </div>
 </body>
 </html>
