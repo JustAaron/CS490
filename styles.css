@@ -59,7 +59,7 @@ input.password, input.username {
     list-style-type: none;
     text-align: center;
     padding: 35px 0 0 0;
-    width: 900px;
+    width: 1000px;
     height: 40px;
     color: black;
 }
@@ -402,4 +402,177 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
   background-color: red;
   border-radius: 50%;
   display: inline-block;
+}
+#userRecipeTitle{
+	font-size: 40px;
+	font-family: "Apple Chancery", cursive;
+	margin: 0;
+    padding: 0;
+    padding-top: 20px;
+}
+#recipeByUser{
+	font-size: 20px;
+	font-family: "Apple Chancery", cursive;
+    margin: 0;
+    padding: 0;
+}
+#recipePicture{
+	background-color: grey;
+	height: 300px;
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 20px;
+	  border: 5px solid;
+  border-radius: 10px;
+}
+#recipeContent{
+	width: 800px;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 10px;
+  display: flex;
+  border: 5px solid;
+  border-radius: 10px;
+}
+#userRecipeIngredients{
+	width: 300px;
+	background-color: #E1D9D7;
+}
+#userRecipeSteps{
+	width: 500px;
+	background-color:#EDD5D0;
+}
+#recipeButtonTab{
+	width: 800px;
+	height: 40px;
+	margin: 0 auto;
+}
+.recipeContentTitle{
+	font-size: 30px;
+	font-family: "Apple Chancery", cursive;
+}
+.recipeInfo{
+	font-size: 20px;
+}
+.starSymbol{
+	color: yellow;
+	background-color: white;
+	font-size: 30px;
+}
+.addToFavoriteButton{
+	background-color: white;
+	border: none;
+	height: 40px;
+	font-size: 20px;
+	float: right;
+}
+#recipeComments{
+	margin: 0 auto;
+	width: 900px;
+}
+#recipeFeeds{
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+}
+#ownRecipeFeed{
+	width: 25%;
+	margin-right: 10px;
+	border: 3px solid;
+	border-radius: 7px;
+}
+#followingRecipeFeed{
+	width: 48%;
+	margin-right: 10px;
+	border: 3px solid;
+	border-radius: 7px;
+}
+#favoritesFeed{
+	width: 25%;
+	border: 3px solid;
+	border-radius: 7px;
+}
+.feedTitle{
+	font-size: 25px;
+	font-family: "Apple Chancery", cursive;
+}
+.displayRecipe{
+	border-top: 1px solid;
+}
+.feedRecipeTitle{
+	font-size: 20px;
+	font-family: Arial Narrow, sans-serif;
+}
+.feedImage{
+	background-color: aliceblue;
+	height: 200px;
+	width: 250px;
+	margin: 0 auto;
+}
+.followingFeedImage{
+	background-color: aliceblue;
+	height: 200px;
+	width: 480px;
+	margin: 0 auto;
+}
+.feedRecipeCreator{
+	font-size: 15px;
+	font-family: Arial Narrow, sans-serif;
+}
+#createNewRecipe{
+	padding-bottom: 40px;
+	display: block;
+}
+#newRecipeButton{
+	height: 30px;
+	width: 200px;
+	float: right;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	background-color: #84bde1;
+}
+.newRecipeLabels{
+	font-size: 20px;
+	font-family:"Century Schoolbook", serif;
+}
+.recipeSubmit{
+	height: 30px;
+	width: 200px;
+}
+.selectTag{
+	width: 400px;
+}
+#favoritePageFeed{
+	width: 50%;
+	margin: 0 auto;
+	display: flex;
+}
+#followingPageFeed{
+	width: 50%;
+	margin: 0 auto;
+	display: flex;
+}
+#ownRecipePageFeed{
+	width: 50%;
+	margin: 0 auto;
+	display: flex;
+}
+.feedPagedisplayRecipe{
+	margin: 0 auto;
+	border-top: 1px solid;
+}
+.feedPageRecipeTitle{
+	font-size: 30px;
+	font-family: Arial Narrow, sans-serif;
+}
+.feedPageImage{
+	background-color: aliceblue;
+	height: 300px;
+	width: 450px;
+	margin: 0 auto;
+}
+.feedPageRecipeCreator{
+	font-size: 25px;
+	font-family: Arial Narrow, sans-serif;
 }
