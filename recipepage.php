@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe</title>
 </head>
-<body>
+<body onload="displayRecipe()">
     <div id="banner">
         <form method="post">
             <label for="LogoutButton">Welcome, <?php echo $_SESSION['username']?></label>
@@ -49,10 +49,13 @@
         </div>
     </div>
     <div id="recipeButtonTab">
-        <button class="addToFavoriteButton">&#9734;Add to Favorites</button>
+      <button class="addToFavoriteButton"><span class="starSymbol">&#9733;</span>Add to Favorites</button>
     </div>
     <div id="recipeComments">
-        <p class="recipeContentTitle">Comments</p>
+      <p class="recipeContentTitle">Comments</p>
+      <textarea class="writeComment" id="writeComment"></textarea><br>
+      <button class="postComment" id="postComment" onclick="sendComment()">Send</button>
     </div>
+    <script type="text/javascript" src="../recipepage.js"></script>
 </body>
 </html>
