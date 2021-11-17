@@ -17,12 +17,13 @@ function get_results() //Gets the resutls for the spooncular search
   global $api_key;
   global $invalid_characters;
   $query = $_POST["query"]; // Query recieved from user search
+  $tags_array = $_POST["tags"];
+  $tags = implode(",", $tags_array);
   $query = str_replace($invalid_characters, "-", $query);
-  $query_result = file_get_contents("https://api.spoonacular.com/recipes/complexSearch?apiKey=" . $api_key . "&number=5&query=" . $query); // Specifies URL to send request to
+  $query_result = file_get_contents("https://api.spoonacular.com/recipes/complexSearch?apiKey=" . $api_key . "&number=5&query=" . $query . "&intolerances=" . $tags); // Specifies URL to send request to
   $result = json_decode($query_result, true);
   return $result;
 }
-
 function populate($result) //Populates the recipe id array with values from the spoonacular search
 {
   global $recipe_id_array;
