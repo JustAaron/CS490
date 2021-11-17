@@ -3,7 +3,7 @@
     function returnToLogin(){
         session_unset();
         session_destroy();
-        header("refresh:0, url=../login.html");
+        header("refresh:0, url=login.html");
         exit();
     }
     if(array_key_exists('LogoutButton',$_POST)){

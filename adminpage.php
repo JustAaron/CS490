@@ -30,7 +30,7 @@ $get_posts = "select * from Recipes";
 $get_posts_result = mysqli_query($db, $get_posts) or die(mysqli_error($db));
 if(mysqli_num_rows($get_posts_result) == 0)
 {
-  $display = "<p><strong>There are no posts</strong></p>";
+  $display = "<p><strong>There are no recipes</strong></p>";
 }
 else
 {
@@ -39,7 +39,7 @@ else
   <tr>
 	<th>Username</th>
   <th>Recipe Title</th>
-  <th>Block Posts</th>
+  <th>Block Recipes</th>
   </tr>";
   while($posts_info = mysqli_fetch_array($get_posts_result))
   {
@@ -75,6 +75,7 @@ else
   {
     echo("<br>Post request received.");
     block_posts($db);
+		header("refresh:0, url=adminpage.php");
   }
 }
 ?>
@@ -96,7 +97,7 @@ else
       <li><a href="create_new_user.php">Create New User</a></li>
     </ul>
   </div>
-  <h1>List of Posts</h1>
+  <h1>List of Recipes</h1>
   <?php print $display ?>
 </body>
 </html>
