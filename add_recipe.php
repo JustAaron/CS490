@@ -7,11 +7,8 @@ $db = mysqli_connect($hostname, $username, $password, $project);
 if(mysqli_connect_errno()){
   exit();
 }
-echo ("<br>Did I survive? 1");
-
 function write_file($max_recipe_id)
 {
-  echo("<br>Write File is where I died.");
   global $db;
   $recipe_username = $_SESSION["username"];
   $recipe_image = "images/" . basename($_FILES["file"]["name"]);
@@ -22,46 +19,44 @@ function write_file($max_recipe_id)
     return;
   }
 }
-echo ("<br>Did I survive? 2");
 function insert_recipe_database($max_recipe_id)
 {
-  echo ("<br>Recipe Database is where I died.");
   global $db;
   $recipe_image = "images/" . basename($_FILES["file"]["name"]);
   $recipe_title = $_POST["Title"];
   $recipe_ingredients = $_POST["Ingredients"];
   $recipe_steps = $_POST["Steps"];
-  echo $recipe_title . "<br>" . $recipe_ingredients . "<br>" . $recipe_steps;
-  $add_recipe = "insert into Recipes(RecipeID, Title, Ingredients, Steps, ImagePath) values('$max_recipe_id', '$recipe_title', '$recipe_ingredients', '$recipe_steps', '$recipe_image')";
+  $recipe_uid = $_SESSION["uid"];
+  $add_recipe = "insert into Recipes(RecipeID, Title, Ingredients, Steps, ImagePath, UID) values('$max_recipe_id', '$recipe_title', '$recipe_ingredients', '$recipe_steps', '$recipe_image', '$recipe_uid')";
   $result = mysqli_query($db, $add_recipe);
   if(!$result)
   {
+    echo("error");
     return false;
   }
   return true;
 }
-echo("<br>Did I survive? 3");
-function insert_tags_database($max_recipe_id)
+function insert_tags_database($max_recipe_id, $max_recipetags_id)
 {
   global $db;
-  echo ("<br> Tags Database is where I died.");
-  foreach($_POST["selectTags"] as $selectedTag)
+  $tags = array_unique($_POST["selectTags"]);
+  foreach($tags as $selectedTag)
   {
+    echo($selectedTag);
+    $max_recipetags_id = $max_recipetags_id + 1;
     $tag_id = get_tag_id($selectedTag);
-    $add_tags = "insert into RecipeTags(RecipeID, TagID) values ('$max_recipe_id', '$tag_id')";
+    $add_tags = "insert into RecipeTags(RecipeTagsID, RecipeID, TagID) values ('$max_recipetags_id', '$max_recipe_id', '$tag_id')";
     $result = mysqli_query($db, $add_tags);
     if(!$result){
-      echo("database error");
+      echo("error");
       return false;
     }
   }
   return true;
 }
-echo("<br>Did I survive? 4");
 
 function get_tag_id($selectedTag)
 {
-  echo ("<br> Getting the Tag ID is where I died.");
   global $db;
   $get_tag = "select TagID as tag_id from Tags where Tag='$selectedTag'";
   $result = mysqli_query($db, $get_tag) or die(mysqli_error($db));
@@ -69,10 +64,8 @@ function get_tag_id($selectedTag)
   $tagID = $row["tag_id"];
   return $tagID;
 }
-echo("<br>Did I survive? 5");
 function get_max_recipe_id()
 {
-  echo ("<br> Getting the Recipe ID is where I died.");
   global $db;
   $query = "SELECT MAX(RecipeID) as max_rid FROM Recipes";
   $result = mysqli_query($db, $query);
@@ -83,32 +76,47 @@ function get_max_recipe_id()
     {
       return 0;
     }
-    var_dump($row);
     $max = $row["max_rid"];
     return $max;
   }
   return -1;
 }
-echo("<br>Did I survive? 6");
+
+function get_max_recipetags_id()
+{
+  global $db;
+  $query = "SELECT MAX(RecipeTagsID) as max_rtid FROM RecipeTags";
+  $result = mysqli_query($db, $query);
+  if($result && mysqli_num_rows($result) == 1)
+  {
+    $row = mysqli_fetch_assoc($result);
+    if($row["max_rtid"] == null)
+    {
+      return 0;
+    }
+    $max = $row["max_rtid"];
+    return $max+1;
+  }
+  return -1;
+}
 function main()
 {
-  echo ("<br>Main is where I died.");
   $max_id = get_max_recipe_id();
+  $max_recipetags_id = get_max_recipetags_id();
   if($max_id == -1)
   {
-    echo("database error");
+    echo("error");
     return;
   }
   if(insert_recipe_database($max_id+1))
   {
-    if(insert_tags_database($max_id+1))
+    if(insert_tags_database($max_id+1, $max_recipetags_id))
     {
       write_file($max_id+1);
     }
   }
+  $_POST = array();
 }
-echo("<br>Did I survive? 7");
 main();
 mysqli_close($db);
-echo ("<br>I survived.");
 ?>

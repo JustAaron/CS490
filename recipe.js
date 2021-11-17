@@ -20,7 +20,12 @@ $(document).ready(function (e){
       contentType: false,
       processData: false,
       success: function(data){
-        console.log("Success");
+        if(data.includes("error"))
+        {
+          console.log(data);
+          alert("error");
+        }
+        console.log(data);
         for(var values of formData.values())
         {
           console.log(values);

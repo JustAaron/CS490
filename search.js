@@ -93,7 +93,7 @@ function getForm(radio) //Display a different form for each selected option
     {
       clearForm();
       console.log("You are searching for a spoonacular recipe");
-      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" name="title" class="searchField"></td></tr><tr class="search"><t<td><label for="tagSelect">Tags:</label</td><td><select id="tagSelect" name="tagSelect" class="tagSelect" multiple=""><option value="Vegan">Vegan</option><option value="Vegetarian">Vegetarian</option><option value=GlutenFree>Gluten-free</option><option></option><option value="Dairy">Dairy</option><option value="Peanut">Peanut</option><option value="Soy">Soy</option><option value="Egg">Egg</option><option value="Seafood">Seafood</option><option value="Sesame">Sesame</option><option value="TreeNut">Tree Nuts</option><option value="Grain">Grain</option><option value="Shellfish">Shellfish</option><option value="Wheat">Wheat</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
+      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" name="title" class="searchField"></td></tr><tr class="search"><t<td><label for="tagSelect">Tags:</label</td><td><select id="tagSelect" name="tagSelect[]" class="tagSelect" multiple=""><option value="Vegan">Vegan</option><option value="Vegetarian">Vegetarian</option><option value=GlutenFree>Gluten-free</option><option></option><option value="Dairy">Dairy</option><option value="Peanut">Peanut</option><option value="Soy">Soy</option><option value="Egg">Egg</option><option value="Seafood">Seafood</option><option value="Sesame">Sesame</option><option value="TreeNut">Tree Nuts</option><option value="Grain">Grain</option><option value="Shellfish">Shellfish</option><option value="Wheat">Wheat</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
       document.getElementById("searchElements").innerHTML += searchHTML;
       $('#tagSelect').chosen();
     }
@@ -101,7 +101,7 @@ function getForm(radio) //Display a different form for each selected option
     {
       clearForm();
       console.log("You are searching for a user created recipe");
-      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" class="searchField"></td></tr><tr class="search"><td><label for="tagSelect">Tags:</label</td><td>                                      <select id="tagSelect" class="tagSelect" multiple=""><option>Vegan</option><option>Vegetarian</option><option>Breakfast</option><option>Lunch</option><option>Dinner</option></select></td></tr><tr class=                              "search"><td><button type="submit" class="searchB">Search</button></td></tr>';
+      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" name="title" class="searchField"></td></tr><tr class="search"><t<td><label for="tagSelect">Tags:</label</td><td><select id="tagSelect" name="tagSelect[]" class="tagSelect" multiple=""><option value="Vegan">Vegan</option><option value="Vegetarian">Vegetarian</option><option value=GlutenFree>Gluten-free</option><option></option><option value="Dairy">Dairy</option><option value="Peanut">Peanut</option><option value="Soy">Soy</option><option value="Egg">Egg</option><option value="Seafood">Seafood</option><option value="Sesame">Sesame</option><option value="TreeNut">Tree Nuts</option><option value="Grain">Grain</option><option value="Shellfish">Shellfish</option><option value="Wheat">Wheat</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
       document.getElementById("searchElements").innerHTML += searchHTML;
       $('#tagSelect').chosen();
     }
@@ -218,11 +218,13 @@ searchForm.addEventListener('submit', function(event){ //run everytime the searc
             }
             else
             {
+                console.log(res);
                 res = JSON.parse(res); //parse the json the contains the results
+                //console.log(res);
                 for (var i = 0; i < res.length;i++)
                 {
                     console.log(res[i].username);
-                    if(res[i].post_id == null)
+                    if(res[i].RecipeID == null)
                     {
                         //Users
                         console.log("Searching for a user");
@@ -231,11 +233,14 @@ searchForm.addEventListener('submit', function(event){ //run everytime the searc
                     }
                     else
                     {
-                        console.log("You are searching posts");
-                        var postID = res[i].post_id;
-                        var subject = res[i].post_subject;
-                        var user = res[i].username;
-                        displayPostResults(postID, user, subject);
+                      console.log("You are searching recipes");
+                      var RecipeID = res[i].RecipeID;
+                      var Title = res[i].Title;
+                      var Username = res[i].Username;
+                      console.log(RecipeID);
+                      console.log(Title);
+                      console.log(Username);
+                      displayPostResults(RecipeID, Username, Title);
                     }
                 }
             }
@@ -285,12 +290,20 @@ searchForm.addEventListener('submit', function(event){ //run everytime the searc
     }
     else if(document.getElementById('recipeRadio').checked) //call search_post if the user selected posts
     {
-        xhttp.open("POST", "../search_post.php", true);
+        xhttp.open("POST", "../search_recipe.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        var sendString = 'searchpost=' + search;
+        var options = document.getElementById("tagSelect").options;
+        var sendString = "";
+        sendString = sendString + "title=" + document.getElementById("title").value;
+        for(var i = 0; i < options.length; i++)
+        {
+          if(options[i].selected)
+          {
+            sendString = sendString + "&tags[]=" + options[i].value;
+          }
+        }
+        console.log(sendString);
         xhttp.send(sendString);
-        console.log(search);
-        console.log("Post");
     }
     else
     {
