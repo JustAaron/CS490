@@ -1,4 +1,4 @@
-var res;
+var RecipeIdArray = [];
 function clearSearchBox(){ //Clear the contents of the search box
     document.getElementById("searchField").innerHTML = "";
 
@@ -24,20 +24,58 @@ function clearForm() //Clear the search form on the page to get ready to display
       table.deleteRow(0);
     }
 }
-
-function SpoonacularRecipe(query, ingredients) //Executes a standard search API call and stores the result in the global variable res.
+function create_spoon_recipes(id_array)
 {
-  $.ajax({
-    url: "https://api.spoonacular.com/recipes/complexSearch?apiKey=b023266a1dd1469d9feba80fcf23ed31&number=1&query=" + query + "&includeIngredients=" + ingredients,
-    success: function(result){
-      setRes(result);
+  console.log("Resolving the promise");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onload = function(){
+    clearResults();
+    if(this.readyState == 4 && this.status == 200)
+    {
+      res = this.responseText;
+      if(res.includes("error"))
+      {
+        alert("Error.");
+        console.log(res);
+      }
+      else
+      {
+        res = JSON.parse(res);
+        console.log(res);
+        for(const key in res)
+        {
+          const link = res[key];
+          console.log(link);
+          const messageHTML = "<div class='res'><a href='../" + link + "'>" + link + "</a></div>";
+          document.getElementById("results").innerHTML += messageHTML;
+        }
+      }
     }
-  })
+  }
+  xhttp.open("POST", "../create_spoon_page.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  console.log(JSON.stringify(RecipeIdArray));
+  var sendString = "";
+  for(var i = 0; i < RecipeIdArray.length; ++i)
+  {
+    if(sendString.indexOf("?") === -1)
+    {
+      sendString = sendString + "?ids[]=" + RecipeIdArray[i];
+    }
+    else
+    {
+      sendString = sendString + "&ids[]=" + RecipeIdArray[i];
+    }
+  }
+  console.log(sendString);
+  xhttp.send(sendString);
 }
 
-function setRes(result) //Need to dodge the asynchronous properties of ajax here in order to set the global variable.
+function setRecipeId(id) //Sets the global variable to the Recipe ID so that we can bypass the asynchronous nature of AJAX
 {
-  res = result;
+  console.log(JSON.stringify(id));
+  RecipeIdArray = RecipeIdArray.concat(id);
+  console.log(JSON.stringify(RecipeIdArray));
 }
 
 function getForm(radio) //Display a different form for each selected option
@@ -55,7 +93,7 @@ function getForm(radio) //Display a different form for each selected option
     {
       clearForm();
       console.log("You are searching for a spoonacular recipe");
-      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" class="searchField"></td></tr><tr class="search"><t<td><label for="tagSelect">Tags:</label</td><td><select id="tagSelect" class="tagSelect" multiple=""><option>Vegan</option                         ><option>Vegetarian</option><option>Breakfast</option><option>Lunch</option><option>Dinner</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
+      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" name="title" class="searchField"></td></tr><tr class="search"><t<td><label for="tagSelect">Tags:</label</td><td><select id="tagSelect" name="tagSelect" class="tagSelect" multiple=""><option value="Vegan">Vegan</option><option value="Vegetarian">Vegetarian</option><option value=GlutenFree>Gluten-free</option><option></option><option value="Dairy">Dairy</option><option value="Peanut">Peanut</option><option value="Soy">Soy</option><option value="Egg">Egg</option><option value="Seafood">Seafood</option><option value="Sesame">Sesame</option><option value="TreeNut">Tree Nuts</option><option value="Grain">Grain</option><option value="Shellfish">Shellfish</option><option value="Wheat">Wheat</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
       document.getElementById("searchElements").innerHTML += searchHTML;
       $('#tagSelect').chosen();
     }
@@ -166,7 +204,6 @@ var searchForm = document.getElementById('searchOptions');
 searchForm.addEventListener('submit', function(event){ //run everytime the search button is clicked
     event.preventDefault();
     clearResults();
-    var search = document.getElementById('searchField').value; //What the user searched for
     var xhttp = new XMLHttpRequest();
     xhttp.onload = function(){ //Runs everytime a response returns after send()
         if(this.readyState == 4 && this.status == 200)
@@ -206,12 +243,36 @@ searchForm.addEventListener('submit', function(event){ //run everytime the searc
     }
     if(document.getElementById('spoonRadio').checked) //create page for spoonacular recipe if user has selected spoonacular recipes
     {
-        SpoonacularRecipe(document.getElementById("searchField").value, document.getElementById("ingredients").value);
-        xhttp.open("POST", "../create_spoon_page.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-ww-form-urlencoded");
-        var sendString = "searchpost=" + JSON.stringify(res);
+      var query = document.getElementById("title").value;
+      const promise = new Promise(function(resolve, reject){
+        console.log("Entering the Promise");
+        var xhttp = new XMLHttpRequest();
+        xhttp.onload = function(){
+          if(this.readyState == 4 && this.status == 200)
+          {
+            res = this.responseText;
+            if(res.includes("error"))
+            {
+              reject("Error.");
+            }
+            else
+            {
+              console.log(res);
+              setRecipeId(res);
+              resolve(res);
+            }
+          }
+        }
+        xhttp.open("POST", "../get_recipe_id.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var sendString = "query=" + query;
         xhttp.send(sendString);
-        console.log("sent");
+        console.log(sendString);
+      });
+      promise.then(
+        function(value){ create_spoon_recipes(RecipeIdArray); },
+        function(error){ alert(error); }
+      );
     }
     else if(document.getElementById('userRadio').checked) //call search_user if the user selected users
     {
