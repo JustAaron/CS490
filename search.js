@@ -50,6 +50,7 @@ function create_spoon_recipes(id_array)
           name = name.substring(0, name.indexOf('.'));
           name = name.replace(/-/g, ' ');
           const messageHTML = "<div class='res'><a href='../" + link + "'>" + name + "</a></div>";
+          document.getElementById("results").innerHTML += messageHTML;
         }
       }
     }
