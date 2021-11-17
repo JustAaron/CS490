@@ -101,7 +101,7 @@ else{
 		</div>
 		<div id="favoritesFeed">
 			<p class="feedTitle">My Favorites</p>
-			<div class="displayRecipe">
+			<div id="favoriteRecipeCol" class="displayRecipe">
 			</div>
       <a class = "seeAll" href="' . '../' . $_SESSION['username'] . '/favoritespage.php' . '">View All</a>
 		</div>

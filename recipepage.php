@@ -48,9 +48,7 @@
             <p class="recipeContentTitle">Steps</p>
         </div>
     </div>
-    <div id="recipeButtonTab">
-      <button class="addToFavoriteButton"><span class="starSymbol">&#9733;</span>Add to Favorites</button>
-    </div>
+    <div id="recipeButtonTab"></div>
     <div id="recipeComments">
       <p class="recipeContentTitle">Comments</p>
       <textarea class="writeComment" id="writeComment"></textarea><br>

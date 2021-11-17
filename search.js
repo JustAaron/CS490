@@ -45,9 +45,11 @@ function create_spoon_recipes(id_array)
         for(const key in res)
         {
           const link = res[key];
-          console.log(link);
-          const messageHTML = "<div class='res'><a href='../" + link + "'>" + link + "</a></div>";
-          document.getElementById("results").innerHTML += messageHTML;
+          var linkArray = link.split('/');
+          var name = linkArray[linkArray.length-1];
+          name = name.substring(0, name.indexOf('.'));
+          name = name.replace(/-/g, ' ');
+          const messageHTML = "<div class='res'><a href='../" + link + "'>" + name + "</a></div>";
         }
       }
     }
