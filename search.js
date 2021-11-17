@@ -275,6 +275,7 @@ searchForm.addEventListener('submit', function(event){ //run everytime the searc
         xhttp.open("POST", "../get_recipe_id.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var sendString = "query=" + query;
+        var sendString = sendString + "&tags[]="
         for(var i = 0; i < options.length; i++)
         {
           if(options[i].selected)
