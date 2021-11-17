@@ -20,9 +20,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Following</title>
 </head>
-<body>
+<body onload="loadFollowingRecipes()">
     <div id="banner">
         <form method="post">
+            <label for="LogoutButton">Welcome, <?php echo $_SESSION['username']?></label>
             <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
         </form>
         <ul id="tabs">
@@ -35,5 +36,10 @@
         </ul>
     </div><br>
     <h1>Following</h1>
+    <div id="followingPageFeed">
+			<div id="followingRecipePageFeed" class="feedPagedisplayRecipe">
+			</div>
+	</div>
+    <script type="text/javascript" src="../followrecipes.js"></script>
 </body>
 </html>
