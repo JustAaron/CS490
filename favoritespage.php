@@ -20,9 +20,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Favorites</title>
 </head>
-<body>
+<body onload="loadFavoriteRecipes()">
     <div id="banner">
         <form method="post">
+            <label for="LogoutButton">Welcome, <?php echo $_SESSION['username']?></label>
             <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
         </form>
         <ul id="tabs">
@@ -35,5 +36,10 @@
         </ul>
     </div><br>
     <h1>Favorites</h1>
+    <div id="favoritePageFeed">
+			<div id="favoritePageDisplay" class="feedPagedisplayRecipe">
+			</div>
+		</div>
+        <script type="text/javascript" src="../favoriterecipes.js"></script>
 </body>
 </html>
