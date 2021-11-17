@@ -56,6 +56,7 @@ else{
 <body onload="loadPage()">
 	<div id="banner">
         <form method="post">
+            <label for="LogoutButton">Welcome, <?php echo $_SESSION['username']?></label>
             <input type="submit" name="LogoutButton" id="LogoutButton" value="Logout" /><br/>
         </form>
        <ul id="tabs">
@@ -67,33 +68,59 @@ else{
         <li><a href="<?php echo('../' . $_SESSION['username'] . '/searchpage.php'); ?>">Search</a></li>
         </ul>
     </div><br>
-    <div id="pageHeader">
-        <h1><?php echo(basename(__FILE__, '.php')); ?></h1>
-    </div>
     <!--
     <div class="otherUserOptions">
         <button class="otherUserButton" id="addFriend">Add Friend</button>
         <button class="otherUserButton" id="follow">+Follow</button>
     </div>-->
+	<!--
+	<div id="recipeFeeds">
+		<div id="ownRecipeFeed">
+		</div>
+		<div id="followingRecipeFeed">
+		</div>
+		<div id="favoritesFeed">
+		</div>
+	</div>
+	-->
 	<?php
 		$post_form_html ='
-		<form id="postForm" enctype="multipart/form-data">
-		  <p><strong>Post Subject:</strong><br>
-			<input type="text" id="post_subject" name="post_subject" size=40 maxlength=50>
-			<p><strong>Post Text:</strong><br>
-			  <textarea id="post_text" name="post_text" rows=8 cols=40 wrap=virtual></textarea>
-			<p><strong>Select Image</strong><br>
-			<input type="file" name="image_file" id="image_file">
-			  <p><input type="submit" value="Submit"></p>
-		</form>';
+		<div id="createNewRecipe"><a href="../create_new_recipe.php"><button id="newRecipeButton">+Create New Recipe</button></a></div>
+		<div id="recipeFeeds">
+		<div id="ownRecipeFeed">
+		<p class="feedTitle">My Recipes</p>
+			<div id="myRecipeCol" class="displayRecipe">
+			</div>
+      <a class = "seeAll" href="' . '../' . $_SESSION['username'] . '/myrecipepage.php' . '">View All</a>
+		</div>
+		<div id="followingRecipeFeed">
+			<p class="feedTitle">Following</p>
+			<div id="followRecipeCol" class="displayRecipe">
+			</div>
+      <a class = "seeAllFollowing" href="' . '../' . $_SESSION['username'] . '/followingpage.php' . '">View All</a>
+		</div>
+		<div id="favoritesFeed">
+			<p class="feedTitle">My Favorites</p>
+			<div class="displayRecipe">
+			</div>
+      <a class = "seeAll" href="' . '../' . $_SESSION['username'] . '/favoritespage.php' . '">View All</a>
+		</div>
+	</div>';
 		if(!$isOther){
-			//echo($post_form_html);
+			echo($post_form_html);
 		}
 		else{
-			echo('<div class="otherUserOptions" id="otherUserOptions">
+			echo('<div id="pageHeader">
+        <h1>');
+        echo(basename(__FILE__, '.php'));
+        echo('</h1>
+    </div><div class="otherUserOptions" id="otherUserOptions">
         <button class="otherUserButton" id="addFriend" onclick="sendFriendRequest();">Add Friend</button>
         <button class="otherUserButton" id="follow" onclick="followUser();">+Follow</button>
-    </div>');
+    </div>    
+	<div id="followingPageFeed">
+		<div id="otherUserFeed" class="feedPagedisplayRecipe"></div>
+	</div>');
 		}
 	?>
 	<div class="userPosts" id="userPosts"></div>
