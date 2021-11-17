@@ -80,13 +80,13 @@
 		copy('friendspage.php', $username . '/friendspage.php');
 		echo("<br><p>Successfully created friends page.</p>");
 		
-		copy('friendspage.php', $username . '/favoritespage.php');
+		copy('favoritespage.php', $username . '/favoritespage.php');
 		echo("<br><p>Successfully created favorites page.</p>");
 		
-		copy('friendspage.php', $username . '/myrecipepage.php');
+		copy('myrecipepage.php', $username . '/myrecipepage.php');
 		echo("<br><p>Successfully created myrecipe page.</p>");
 		
-		copy('friendspage.php', $username . '/followingpage.php');
+		copy('followingpage.php', $username . '/followingpage.php');
 		echo("<br><p>Successfully created following page.</p>");
 	}
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
