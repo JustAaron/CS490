@@ -269,17 +269,6 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 	width: 400px;
 	overflow:auto;
 }
-.addComment{
-	display:flex;
-	position: fixed;
-	left: 50%;
-	bottom: 20px;
-	transform: translate(-50%, -50%);
-	margin: 0 auto;
-}
-.writeComment{
-	width: 400px;
-}
 .userPostLink{
 	font-size:30px;
 	background-color:white;
@@ -437,10 +426,11 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 #userRecipeIngredients{
 	width: 300px;
 	background-color: #E1D9D7;
+ border-right: 3px solid;
 }
 #userRecipeSteps{
 	width: 500px;
-	background-color:#EDD5D0;
+	background-color:#E1D9D7;
 }
 #recipeButtonTab{
 	width: 800px;
@@ -468,7 +458,7 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 }
 #recipeComments{
 	margin: 0 auto;
-	width: 900px;
+	width: 700px;
 }
 #recipeFeeds{
 	width: 100%;
@@ -496,17 +486,15 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 	font-size: 25px;
 	font-family: "Apple Chancery", cursive;
 }
-.displayRecipe{
-	border-top: 1px solid;
-}
 .feedRecipeTitle{
+  border-top: 1px solid;
 	font-size: 20px;
 	font-family: Arial Narrow, sans-serif;
 }
 .feedImage{
 	background-color: aliceblue;
 	height: 200px;
-	width: 250px;
+	width: 90%;
 	margin: 0 auto;
 }
 .followingFeedImage{
@@ -560,11 +548,12 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 }
 .feedPagedisplayRecipe{
 	margin: 0 auto;
-	border-top: 1px solid;
 }
 .feedPageRecipeTitle{
-	font-size: 30px;
+	font-size: 20px;
 	font-family: Arial Narrow, sans-serif;
+	border-top: 1px solid;
+	padding-top: 10px;
 }
 .feedPageImage{
 	background-color: aliceblue;
@@ -573,6 +562,53 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 	margin: 0 auto;
 }
 .feedPageRecipeCreator{
-	font-size: 25px;
+	font-size: 15px;
 	font-family: Arial Narrow, sans-serif;
+}
+.seeAll{
+	font-size: 15px;
+	margin-left: 40%;
+	color: blue;
+}
+.seeAllFollowing{
+	font-size: 15px;
+	margin-left: 44%;
+	color: blue;
+}
+.recipeImage{
+	height: 100%;
+	width: 100%;
+}
+.writeComment{
+	width: 500px;
+	height: 50px;
+	margin: 0 auto;
+	margin-left: 15%;
+}
+.postComment{
+	height: 40px;
+	width: 85px;
+	margin-left: 75%;
+	background-color: dodgerblue;
+	font-size: 15px;
+	font-weight: bold;
+}
+.commentor{
+	font-size: 17px;
+	font-weight: bold;
+	border-top: 1px solid;
+	text-align: left;
+	margin-left: 60px;
+}
+.commentContent{
+	text-align: left;
+	margin-left: 60px;
+}
+.sideImage{
+	height: 210px;
+	width: 100%;
+}
+.middleImage{
+	height: 210px;
+	width: 100%;
 }
