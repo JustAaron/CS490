@@ -26,7 +26,7 @@ if (mysqli_connect_errno())
 }
 mysqli_select_db($db, $project);
 
-$get_posts = "select * from posts";
+$get_posts = "select * from Recipes";
 $get_posts_result = mysqli_query($db, $get_posts) or die(mysqli_error($db));
 if(mysqli_num_rows($get_posts_result) == 0)
 {
@@ -37,20 +37,24 @@ else
   $display = "
   <table cellpadding=3 cellspacing=1 border=1>
   <tr>
-  <th>Post Title</th>
-  <th>Post Text</th>
+	<th>Username</th>
+  <th>Recipe Title</th>
   <th>Block Posts</th>
   </tr>";
   while($posts_info = mysqli_fetch_array($get_posts_result))
   {
-    $post_subject = $posts_info["post_subject"];
-    $post_body = $posts_info["post_body"];
+    $post_subject = $posts_info["Title"];
+		$uid = $posts_info["UID"];
+		$query = "SELECT a.username FROM alpha_users a WHERE a.uid='$uid'";
+		$result = mysqli_query($db, $query);
+		$r = mysqli_fetch_assoc($result);
+		$username = $r["username"];
 
     $display .="
     <tr>
     <form method='post'>
+		<td align=center><strong>$username</strong></td>
     <td><strong><input type='hidden' name='post_subject' value='$post_subject' >$post_subject</strong></td>
-    <td align=center><strong>$post_body</strong></td>
     <td><input type='submit' value='BLOCK'></td>
     </form>
     </tr>";
@@ -63,7 +67,7 @@ else
     echo("<br>Executing Function...");
     $PostSubject = $_POST["post_subject"];
     echo("<br>" . $PostSubject);
-    $query = "delete from posts where post_subject='$PostSubject'";
+    $query = "delete from Recipes where Title='$PostSubject'";
     $result = mysqli_query($db, $query) or die(mysqli_error($db));
     echo("Post successfully deleted.");
   }
