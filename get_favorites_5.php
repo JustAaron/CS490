@@ -1,6 +1,6 @@
 <?php
 	/*
-	Functionality: Echoes information about favorited recipes of the logged-in user. Included information is the RecipeID, Title, Username (of the author), and ImagePath.
+	Functionality: Echoes information about the 5 most recently-favorited recipes of the logged-in user. Included information is the RecipeID, Title, Username (of the author), and ImagePath.
 	Input: 
 	In $_SESSION[], "uid" should be the uid of the logged-in user
 	Output: 
@@ -24,7 +24,7 @@
 	
 	function selectDatabase($client_id){
 		global $conn;
-		$query = 'SELECT f.FavoriteRecipesID as frid, r.RecipeID as rid, r.Title as t, u.username as username, r.ImagePath as i FROM FavoriteRecipes f, Recipes r, alpha_users u WHERE f.uid=' . $client_id . ' AND f.RecipeID=r.RecipeID AND r.uid=u.uid ORDER BY frid DESC;';
+		$query = 'SELECT f.FavoriteRecipesID as frid, r.RecipeID as rid, r.Title as t, u.username as username, r.ImagePath as i FROM FavoriteRecipes f, Recipes r, alpha_users u WHERE f.uid=' . $client_id . ' AND f.RecipeID=r.RecipeID AND r.uid=u.uid ORDER BY frid DESC LIMIT 5;';
 		$result = mysqli_query($conn, $query);
 		if(!$result){
 			return null;
