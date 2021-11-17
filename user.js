@@ -18,7 +18,7 @@ function checkFollow() //Check if the user already follows or not
             }
         }
     }
-    xhttp.open("POST", "../has_user_followed.php", true);
+    xhttp.open("POST", "../has_user_followed.php", true); 
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var sendString = 'other=' + other;
     xhttp.send(sendString);
@@ -52,7 +52,7 @@ function isFriends()
                         isFriend = 1;
                     }
                 }
-
+                
             }
             if(isFriend == 1)
             {
@@ -64,7 +64,7 @@ function isFriends()
             }
         }
     }
-    xhttp.open("GET", "../get_friends.php", true);
+    xhttp.open("GET", "../get_friends.php", true); 
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -87,7 +87,7 @@ function checkFriend() //Check if the user is already friends with another user
             }
         }
     }
-    xhttp.open("POST", "../has_user_friend_requests.php", true);
+    xhttp.open("POST", "../has_user_friend_requests.php", true); 
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var sendString = 'other=' + other;
     xhttp.send(sendString);
@@ -100,11 +100,17 @@ function loadPage() //Calls whenever the page loads
         console.log("HERE");
         checkFollow();
         checkFriend();
+        loadOtherRecipes();
+    }
+    else
+    {
+        loadMyRecipes();
+        loadFollowingRecipes()    
     }
     loadRequestNotifications();
     getFriends();
 }
-function loadChatNotifications(friends){
+function loadChatNotifications(friends){ //Given a list of friends, if there are unread messages, add a notification on the messages tab
     for (var i = 0; i < friends.length; i++)
     {
         var xhttp = new XMLHttpRequest();
@@ -125,15 +131,15 @@ function loadChatNotifications(friends){
               }
         }
       }
-        other = friends[i];
+        var f = friends[i];
         xhttp.open("POST", "../get_num_unread_messages.php", true); 
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        var sendString = 'other=' + other;
+        var sendString = 'other=' + f;
         xhttp.send(sendString);
     }
     
 }
-function getFriends()
+function getFriends() //Get a list of friends and send it to loadChatNotifications()
 {
     var friendsList = [];
     var xhttp = new XMLHttpRequest();
@@ -164,7 +170,7 @@ function getFriends()
     xhttp.open("GET", "../get_friends.php", true); 
     xhttp.send();
 }
-function loadRequestNotifications(){
+function loadRequestNotifications(){ //Check if there are any pending friend requests and add an notification symbol if it does.
     var xhttp = new XMLHttpRequest();
     xhttp.onload = function(){ //Runs everytime a response returns after send()
         if(this.readyState == 4 && this.status == 200)
@@ -284,4 +290,121 @@ function sendFriendRequest() //Called whenver the user presses the Add Friend/Ca
         xhttp.send(sendString);
         document.getElementById("addFriend").innerHTML = 'Add Friend';
     }
+}
+function displayMyRecipe(title, image, id)
+{
+    var recipeHTML = '<p class="feedRecipeTitle">' + title + '</p><p class="feedImage"><a href="../'+ other + '/' + id + '.php"><img src="../' + image + '" class="sideImage"></a></p><p class="feedRecipeCreator">By: ' + other + '</p>';
+    document.getElementById('myRecipeCol').innerHTML += recipeHTML;
+}
+function loadMyRecipes()
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){ //Runs everytime a response returns after send()
+        if(this.readyState == 4 && this.status == 200)
+        {
+            res = this.responseText;
+            if(res.includes('no recipes'))
+            {
+                console.log("There are no recipes");
+            }
+            else if(res.includes('database error'))
+            {
+                alert("Error: Database");
+            }
+            else
+            {
+                res = JSON.parse(res);
+                for (var i =0;i<res.length;i++)    //Go through all the comments one at a time and add it to the comments section
+                {
+                    var recipeTitle = res[i].recipe_title;
+                    var imagePath = res[i].image_path;
+                    var recipeID = res[i].recipe_id;
+                    displayMyRecipe(recipeTitle, imagePath, recipeID);
+                }
+            }
+        }
+    }
+    xhttp.open("POST", "../get_my_recipes.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var sendString = 'username=' + other;
+    console.log(sendString);
+    xhttp.send(sendString);
+}
+function displayFollowRecipe(title, creator, image, id)
+{
+    var recipeHTML = '<p class="feedRecipeTitle">' + title + '</p><p class="followingFeedImage"><a href="../'+ creator + '/' + id + '.php"><img src="../' + image + '" class="middleImage"></a></p><p class="feedRecipeCreator">By: ' + creator + '</p>';
+    document.getElementById('followRecipeCol').innerHTML += recipeHTML;
+}
+function loadFollowingRecipes()
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){ //Runs everytime a response returns after send()
+        if(this.readyState == 4 && this.status == 200)
+        {
+            res = this.responseText;
+            console.log(res);
+            if(res.includes('no recipes'))
+            {
+                console.log("There are no recipes");
+            }
+            else if(res.includes('database error'))
+            {
+                alert("Error: Database");
+            }
+            else
+            {
+                res = JSON.parse(res);
+                for (var i =0;i<res.length;i++)    //Go through all the comments one at a time and add it to the comments section
+                {
+                    var recipeTitle = res[i].recipe_title;
+                    var imagePath = res[i].image_path;
+                    var recipeID = res[i].recipe_id;
+                    var creator = res[i].username;
+                    displayFollowRecipe(recipeTitle, creator, imagePath, recipeID);
+                }
+            }
+        }
+    }
+    xhttp.open("GET", "../get_follow_recipes.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+}
+function displayOtherRecipe(title, image, id)
+{
+    var recipeHTML = '<p class="feedPageRecipeTitle">' + title + '</p><p class="feedPageImage"><a href="../'+ other + '/' + id + '.php"><img src="../' + image + '" class="feedPageImage"></a></p><p class="feedPageRecipeCreator">By: ' + other + '</p>';
+    document.getElementById('otherUserFeed').innerHTML += recipeHTML;
+}
+function loadOtherRecipes()
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){ //Runs everytime a response returns after send()
+        if(this.readyState == 4 && this.status == 200)
+        {
+            res = this.responseText;
+            console.log(res);
+            if(res.includes('no recipes'))
+            {
+                console.log("There are no recipes");
+            }
+            else if(res.includes('database error'))
+            {
+                alert("Error: Database");
+            }
+            else
+            {
+                res = JSON.parse(res);
+                for (var i =0;i<res.length;i++)    //Go through all the comments one at a time and add it to the comments section
+                {
+                    var recipeTitle = res[i].recipe_title;
+                    var imagePath = res[i].image_path;
+                    var recipeID = res[i].recipe_id;
+                    displayOtherRecipe(recipeTitle, imagePath, recipeID);
+                }
+            }
+        }
+    }
+    xhttp.open("POST", "../get_all_user_recipes.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var sendString = 'username=' + other;
+    xhttp.send(sendString);
 }
