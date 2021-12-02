@@ -50,7 +50,7 @@
       <textarea id="Ingredients" name="Ingredients" rows=3 cols=75 wrap=virtual></textarea></p>
     <p class="newRecipeLabels">Input the steps to make your recipe:<br>
       <textarea id="Steps" name="Steps" rows=15 cols=75 wrap=virtual></textarea></p>
-    <p class="newRecipeLabels">Select tags for your recipe:<br>
+    <p class="newRecipeLabels">Select intolerances for your recipe:<br>
       <select id="selectTag" name="selectTag[]" class="selectTag" multiple>
         <option value="Vegetarian">Vegetarian</option>
         <option value="Vegan">Vegan</option>

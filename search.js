@@ -96,7 +96,7 @@ function getForm(radio) //Display a different form for each selected option
     {
       clearForm();
       console.log("You are searching for a spoonacular recipe");
-      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" name="title" class="searchField"></td></tr><tr class="search"><td><label for="tagSelect">Tags:</label</td><td><select id="tagSelect" name="tagSelect[]" class="tagSelect" multiple=""><option value=Gluten>Gluten</option><option></option><option value="Dairy">Dairy</option><option value="Peanut">Peanut</option><option value="Soy">Soy</option><option value="Egg">Egg</option><option value="Seafood">Seafood</option><option value="Sesame">Sesame</option><option value="TreeNut">Tree Nuts</option><option value="Grain">Grain</option><option value="Shellfish">Shellfish</option><option value="Wheat">Wheat</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
+      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" name="title" class="searchField"></td></tr><tr class="search"><td><label for="tagSelect">Intolerances:</label</td><td><select id="tagSelect" name="tagSelect[]" class="tagSelect" multiple=""><option value=Gluten>Gluten</option><option></option><option value="Dairy">Dairy</option><option value="Peanut">Peanut</option><option value="Soy">Soy</option><option value="Egg">Egg</option><option value="Seafood">Seafood</option><option value="Sesame">Sesame</option><option value="TreeNut">Tree Nuts</option><option value="Grain">Grain</option><option value="Shellfish">Shellfish</option><option value="Wheat">Wheat</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
       document.getElementById("searchElements").innerHTML += searchHTML;
       $('#tagSelect').chosen();
     }
@@ -104,7 +104,7 @@ function getForm(radio) //Display a different form for each selected option
     {
       clearForm();
       console.log("You are searching for a user created recipe");
-      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" name="title" class="searchField"></td></tr><tr class="search"><td><label for="tagSelect">Tags:</label</td><td><select id="tagSelect" name="tagSelect[]" class="tagSelect" multiple=""><option value="Vegan">Vegan</option><option value="Vegetarian">Vegetarian</option><option value=GlutenFree>Gluten-free</option><option></option><option value="Dairy">Dairy</option><option value="Peanut">Peanut</option><option value="Soy">Soy</option><option value="Egg">Egg</option><option value="Seafood">Seafood</option><option value="Sesame">Sesame</option><option value="TreeNut">Tree Nuts</option><option value="Grain">Grain</option><option value="Shellfish">Shellfish</option><option value="Wheat">Wheat</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
+      var searchHTML = '<tr class="search"><td><label for="title">Title:</label></td><td><input type="text" id="title" name="title" class="searchField"></td></tr><tr class="search"><td><label for="tagSelect">Intolerances:</label</td><td><select id="tagSelect" name="tagSelect[]" class="tagSelect" multiple=""><option value="Vegan">Vegan</option><option value="Vegetarian">Vegetarian</option><option value=GlutenFree>Gluten-free</option><option></option><option value="Dairy">Dairy</option><option value="Peanut">Peanut</option><option value="Soy">Soy</option><option value="Egg">Egg</option><option value="Seafood">Seafood</option><option value="Sesame">Sesame</option><option value="TreeNut">Tree Nuts</option><option value="Grain">Grain</option><option value="Shellfish">Shellfish</option><option value="Wheat">Wheat</option></select></td></tr><tr class="search"><td><button type="submit" class="searchB">Search</button></td></tr>';
       document.getElementById("searchElements").innerHTML += searchHTML;
       $('#tagSelect').chosen();
     }
@@ -275,7 +275,7 @@ searchForm.addEventListener('submit', function(event){ //run everytime the searc
         xhttp.open("POST", "../get_recipe_id.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var sendString = "query=" + query;
-        var sendString = sendString + "&tags[]="
+        var sendString = sendString + "&tags[]=";
         for(var i = 0; i < options.length; i++)
         {
           if(options[i].selected)
@@ -308,6 +308,7 @@ searchForm.addEventListener('submit', function(event){ //run everytime the searc
         var options = document.getElementById("tagSelect").options;
         var sendString = "";
         sendString = sendString + "title=" + document.getElementById("title").value;
+        sendString = sendString + "&tags[]=";
         for(var i = 0; i < options.length; i++)
         {
           if(options[i].selected)
