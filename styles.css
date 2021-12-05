@@ -612,3 +612,37 @@ label[for=title], label[for=ingredients], label[for=tagSelect], label[for=search
 	height: 210px;
 	width: 100%;
 }
+.spoonImage{
+	margin-left: 30%;
+	height: 400px;
+	width: 600px;
+	border:5px solid black;
+}
+.spoonIngredients{
+	border:5px solid black;
+	background-color: beige;
+	text-align: center;
+	margin: 0 auto;
+	width: 800px;
+	font-size: 20px;
+}
+.spoonInstructions{
+	border:5px solid black;
+	background-color:antiquewhite;
+	text-align: center;
+	margin: 0 auto;
+	width: 900px;
+	font-size: 18px;
+}
+.spoonLink{
+	font-size: 20px;
+	border:2px solid black;
+	margin-left: 45%;
+	background-color: aliceblue;
+ 	color: black;
+	font-weight: bold;
+}
+.spoonSubTitle{
+	font-size: 30px;
+	font-weight: bold;
+}

@@ -60,17 +60,37 @@ function write_recipe($recipe_information)
       <title>Recipe</title>
   </head>
   <body>
+      <div id='banner'>
+        <form method='post'>
+            <label for='LogoutButton'>Welcome, " . $_SESSION['username'] . "</label>
+            <input type='submit' name='LogoutButton' id='LogoutButton' value='Logout' /><br/>
+        </form>
+        <ul id='tabs'>
+        <li><a href='../" . $_SESSION['username'] . "/" . $_SESSION['username'] . ".php'>Home</a></li>
+        <li><a href='../" . $_SESSION['username'] . "/chatpage.php'>Messages</a></li>
+        <li><a href='../" . $_SESSION['username'] . "/favoritespage.php'>My Favorites</a></li>
+        <li><a href='../" . $_SESSION['username'] . "/myrecipepage.php'>My Recipes</a></li>
+        <li><a href='../" . $_SESSION['username'] . "/followingpage.php'>Following</a></li>
+        <li><a href='../" . $_SESSION['username'] . "/friendspage.php'>Friends</a></li>
+        <li><a href='../" . $_SESSION['username'] . "/searchpage.php'>Search</a></li>
+        </ul>
+    </div><br>
+  <h1 class='spoonTitle'>Recipe</h1>
   ";
-  $file_contents .= "<a href=" . "'" . $recipe_information["spoonacularSourceUrl"] . "'" . ">Full Recipe </a><br><br>";
-  $file_contents .= "<img src=" . "'" . $recipe_information["image"] . "'" . "><br><br>";
+  $file_contents .= "<img src=" . "'" . $recipe_information["image"] . "'" . " class='spoonImage'><br><br>";
+  $file_contents .= "<div class='spoonIngredients'><p1 class='spoonSubTitle'>Ingredients</p1>";
   for($count = 0; $count < count($recipe_information["extendedIngredients"]); ++$count)
   {
     $file_contents .= $recipe_information["extendedIngredients"][$count]["original"] . "<br>";
   }
+  $file_contents .= "</div><br>";
+  $file_contents .= "<div class='spoonInstructions'><p1 class='spoonSubTitle'>Steps</p1>";
   if(!empty($recipe_information["instructions"]))
   {
     $file_contents .= $recipe_information["instructions"] . "<br>";
   }
+  $file_contents .= "</div><br>";
+  $file_contents .= "<a href=" . "'" . $recipe_information["spoonacularSourceUrl"] . "'" . " class='spoonLink'>Link to Full Recipe </a><br><br>";
   $file_contents .= "
   </body>
   </html>
